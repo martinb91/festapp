@@ -4,9 +4,9 @@ import java.util.Date;
 
 public class Ticket {
 	
-	private String link;
-	private String ID;
-	private double prise;
+	private String url;
+	private String id;
+	private double price;
 	private String type;
 	private Date beginDate;
 	private Date endDate;

@@ -17,10 +17,12 @@ public class ArtistServiceImpl implements ArtistService {
 	@Autowired
 	private ArtistRepository artistRepository;
 
+	@Override
 	public List<Artist> getAllArtists() {
 		return artistRepository.getAllArtists();
 	}
 
+	
 	public Artist getArtistById(String ID) {
 		return artistRepository.getArtistById(ID);
 	}

@@ -3,7 +3,7 @@ package hu.bandur.mvc.data.entities;
 public class FestivalStyle {
 
 	private String style;
-	private int ID;
+	private int id;
 
 	public String getStyle() {
 		return style;

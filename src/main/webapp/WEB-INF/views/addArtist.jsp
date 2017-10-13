@@ -22,8 +22,6 @@
 <body>
 	<section>
 		<div class="jumbotron">
-			<a href="<c:url value="/j_spring_security_logout" />"
-				class="btn btn-danger btn-mini pull-right">logout</a>
 			<div class="container">
 				<h1>Fellépők</h1>
 				<p>Fellépő hozzáadása</p>
@@ -36,8 +34,7 @@
 				<legend>Új fellépő hozzáadása</legend>
 
 				<div class="form-group">
-					<label class="control-label col-lg-2 col-lg-2" for="id"> <spring:message
-							code="addArtist.form.Id.label" />
+					<label class="control-label col-lg-2 col-lg-2" for="id">Fellépő ID
 					</label>
 					<div class="col-lg-10">
 						<form:input id="id" path="id" type="number"

@@ -2,18 +2,19 @@ package hu.bandur.mvc.data.entities;
 
 public class Quarters {
 	
-	private double prise;
+	private double price;
 	private String name;
 	private int heads;
 	private String address;
 	private String description;
 	private String email;
 	private String phoneNumber;
-	public double getPrise() {
-		return prise;
+	
+	public double getPrice() {
+		return price;
 	}
-	public void setPrise(double prise) {
-		this.prise = prise;
+	public void setPrice(double price) {
+		this.price = price;
 	}
 	public String getName() {
 		return name;
