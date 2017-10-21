@@ -29,15 +29,26 @@ public class InMemoryArtistRepository implements ArtistRepository {
 	public List<Artist> getAllArtists() {
 		Map<String, Object> params = new HashMap<String, Object>();
 		List<Artist> result = jdbcTemplate.query("SELECT * FROM ARTISTS", params, new ArtistMapper());
+		List<MusicStyle> result2 = jdbcTemplate.query("SELECT * FROM MUSICSTYLES", params, new MusicStyleMapper());
+		result.get(1).setMusicStyleList(result2);
 		return result;
 	}
 
 	private static final class ArtistMapper implements RowMapper<Artist> {
 		public Artist mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Artist artist = new Artist();
+			Artist artist = new Artist(1);
 			artist.setId(rs.getInt("ID"));
 			artist.setName(rs.getString("NAME"));
 			artist.setDescription(rs.getString("DESCRIPTION"));
+			return artist;
+		}
+	}
+	
+	private static final class MusicStyleMapper implements RowMapper<MusicStyle> {
+		public MusicStyle mapRow(ResultSet rs, int rowNum) throws SQLException {
+			MusicStyle artist = new MusicStyle(1);
+			artist.setId(rs.getInt("ID"));
+			artist.setStyle(rs.getString("STYLE"));
 			return artist;
 		}
 	}

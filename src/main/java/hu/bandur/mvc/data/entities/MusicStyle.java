@@ -1,5 +1,7 @@
 package hu.bandur.mvc.data.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,30 +12,37 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="MUSICSTYLES")
-public class MusicStyle {
+public class MusicStyle implements Serializable{
 
-	private String style;
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-//	@ManyToOne(optional = true)
-//	@JoinColumn(name = "FK_ARTIST", referencedColumnName = "ID")
-	private int fk_artist;
+	private String style;
+	@ManyToOne
+	private Artist artist;
 
 	public int getId() {
 		return id;
+	}
+	
+	private MusicStyle() {
+		
+	}
+	
+	public MusicStyle(int a) {
+		
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public int getFk_artist() {
-		return fk_artist;
+	public Artist getFk_artist() {
+		return artist;
 	}
 
-	public void setFk_artist(int fk_artist) {
-		this.fk_artist = fk_artist;
+	public void setFk_artist(Artist artist) {
+		this.artist = artist;
 	}
 
 	public String getStyle() {

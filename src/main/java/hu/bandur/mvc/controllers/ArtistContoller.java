@@ -80,7 +80,7 @@ public class ArtistContoller {
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String getAddNewArtistForm(Model model) {
-		Artist newArtist = new Artist();
+		Artist newArtist = new Artist(1);
 		model.addAttribute("newArtist", newArtist);
 		return "addArtist";
 	}
