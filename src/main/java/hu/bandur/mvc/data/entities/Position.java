@@ -4,18 +4,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="POSITIONS")
 public class Position {
-	
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private double x;
 	private double y;
 	private String city;
 	private String description;
 	
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	public int getId() {
 		return id;
 	}

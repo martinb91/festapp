@@ -18,8 +18,8 @@ public class MusicStyle implements Serializable{
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	private String style;
-	@ManyToOne
-	private Artist artist;
+//	@ManyToOne
+//	private Artist artist;
 	
 	public MusicStyle() {
 		
@@ -33,13 +33,13 @@ public class MusicStyle implements Serializable{
 		this.id = id;
 	}
 
-	public Artist getFk_artist() {
-		return artist;
-	}
-
-	public void setFk_artist(Artist artist) {
-		this.artist = artist;
-	}
+//	public Artist getFk_artist() {
+//		return artist;
+//	}
+//
+//	public void setFk_artist(Artist artist) {
+//		this.artist = artist;
+//	}
 
 	public String getStyle() {
 		return style;
