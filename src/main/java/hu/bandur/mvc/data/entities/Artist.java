@@ -24,11 +24,8 @@ public class Artist implements Serializable{
 	@OneToMany
 	private List<MusicStyle> musicStyleList;
 	
-	private Artist() {
+	public Artist() {
 		
-	}
-	public Artist( int a) {
-		this();
 	}
 
 	public int getId() {

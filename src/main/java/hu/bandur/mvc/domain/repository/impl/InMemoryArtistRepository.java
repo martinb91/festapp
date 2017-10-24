@@ -36,7 +36,7 @@ public class InMemoryArtistRepository implements ArtistRepository {
 
 	private static final class ArtistMapper implements RowMapper<Artist> {
 		public Artist mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Artist artist = new Artist(1);
+			Artist artist = new Artist();
 			artist.setId(rs.getInt("ID"));
 			artist.setName(rs.getString("NAME"));
 			artist.setDescription(rs.getString("DESCRIPTION"));

@@ -1,5 +1,8 @@
 package hu.bandur.mvc.data.entities;
 
+import javax.persistence.Entity;
+
+@Entity
 public class FestivalStyle {
 
 	private String style;

@@ -20,12 +20,8 @@ public class MusicStyle implements Serializable{
 	private String style;
 	@ManyToOne
 	private Artist artist;
-
-	public int getId() {
-		return id;
-	}
 	
-	private MusicStyle() {
+	public MusicStyle() {
 		
 	}
 	
