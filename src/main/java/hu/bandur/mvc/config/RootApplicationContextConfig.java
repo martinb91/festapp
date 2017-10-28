@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan(basePackages = "hu.bandur.mvc")
-@EnableJpaRepositories(basePackages = "hu.bandur.mvc.domain.repository")
+@EnableJpaRepositories(basePackages = {"hu.bandur.mvc.domain.repository","hu.bandur.mvc.dao"})
 @EnableTransactionManagement
 public class RootApplicationContextConfig {
 

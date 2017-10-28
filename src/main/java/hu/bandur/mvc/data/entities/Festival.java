@@ -14,12 +14,20 @@ import javax.persistence.Table;
 @Entity
 @Table(name="FESTIVALS")
 public class Festival {
-	private String name;
+	
+	@Override
+	public String toString() {
+		return "Festival [name=" + name + ", place=" + place + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", description=" + description + ", festID=" + festID + ", festStyleList=" + festStyleList + "]";
+	}
+
+
 	@OneToOne
 	private Position place;
 	private Date beginDate;
 	private Date endDate;
 	private String description;
+	private String name;
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int festID;
@@ -27,6 +35,14 @@ public class Festival {
 	private List<FestivalStyle> festStyleList;
 	
 	
+	public List<FestivalStyle> getFestStyleList() {
+		return festStyleList;
+	}
+
+	public void setFestStyleList(List<FestivalStyle> festStyleList) {
+		this.festStyleList = festStyleList;
+	}
+
 	public String getFestivalName() {
 		return name;
 	}
