@@ -43,11 +43,11 @@ public class Festival {
 		this.festStyleList = festStyleList;
 	}
 
-	public String getFestivalName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setFestivalName(String festivalName) {
+	public void setName(String festivalName) {
 		this.name = festivalName;
 	}
 

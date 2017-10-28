@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import hu.bandur.mvc.dao.FestivalDAO;
 import hu.bandur.mvc.data.entities.Festival;
 import hu.bandur.mvc.data.entities.FestivalStyle;
 import hu.bandur.mvc.data.entities.Position;
