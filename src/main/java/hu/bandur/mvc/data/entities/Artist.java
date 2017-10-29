@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="ARTISTS")
-public class Artist implements Serializable{
+public class Artist {
 
 	private String name;
 	private String description;

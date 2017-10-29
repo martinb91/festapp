@@ -3,6 +3,7 @@ package hu.bandur.mvc.data.entities;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,26 +16,34 @@ import javax.persistence.Table;
 @Table(name="FESTIVALS")
 public class Festival {
 	
-	@Override
-	public String toString() {
-		return "Festival [name=" + name + ", place=" + place + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", description=" + description + ", festID=" + festID + ", festStyleList=" + festStyleList + "]";
+	private Festival() {
+		super();
 	}
-
-
+	
+	
 	@OneToOne
-	private Position place;
+	private Position position;
 	private Date beginDate;
 	private Date endDate;
 	private String description;
 	private String name;
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="ID")
 	private int festID;
-	@OneToMany
+	@OneToMany(mappedBy="festival")
 	private List<FestivalStyle> festStyleList;
 	
 	
+	public Festival(Position place, Date beginDate, Date endDate, String description, String name) {
+		super();
+		this.position = place;
+		this.beginDate = beginDate;
+		this.endDate = endDate;
+		this.description = description;
+		this.name = name;
+	}
+
 	public List<FestivalStyle> getFestStyleList() {
 		return festStyleList;
 	}
@@ -51,12 +60,12 @@ public class Festival {
 		this.name = festivalName;
 	}
 
-	public Position getPlace() {
-		return place;
+	public Position getPosition() {
+		return position;
 	}
 
-	public void setPlace(Position place) {
-		this.place = place;
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 	public Date getBeginDate() {
@@ -83,12 +92,9 @@ public class Festival {
 		this.description = description;
 	}
 
-	public int getFestID() {
-		return festID;
+	@Override
+	public String toString() {
+		return "Festival [name=" + name + ", place=" + position + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", description=" + description + ", festID=" + festID + ", festStyleList=" + festStyleList + "]";
 	}
-
-	public void setFestID(int festID) {
-		this.festID = festID;
-	}
-
 }

@@ -28,24 +28,12 @@ public class FestivalController {
 	@RequestMapping(path = "/new.json", method = RequestMethod.POST)
 	public void create(@RequestBody Festival f) {
 		System.out.println(f);
-//		Festival fest= new Festival();
-//		fest.setBeginDate(new Date(2017, 10, 12, 13, 14));
-//		fest.setEndDate(new Date(2017, 10, 17, 13, 14));
-//		fest.setDescription("Hello");
-//		fest.setFestivalName("Rock Maraton");
-//		Position place = new Position();
-//		place.setCity("city");
-//		place.setOthers("dasggg");
-//		place.setX(1.1);
-//		place.setY(2.1);
-//		fest.setPlace(place);
-//		List festStyleList = new ArrayList<FestivalStyle>();
-//		FestivalStyle fs = new FestivalStyle();
-//		fs.setStyle("rock");
-//		festStyleList.add(fs);
-//		fest.setFestStyleList(festStyleList);
-//		festivalService.addFestival(fest);
+		festivalService.addFestival(f);
 	}
 	
+	@RequestMapping(path = "/all", method = RequestMethod.GET)
+	public void all() {
+		System.out.println(festivalService.findAllFestival());
+	}
 	
 }

@@ -41,11 +41,28 @@ public class Position {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public String getOthers() {
+	public String getDescription() {
 		return description;
 	}
-	public void setOthers(String others) {
+	public void setDescription(String others) {
 		this.description = others;
+	}
+	
+	public Position(double x, double y, String city, String description) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.city = city;
+		this.description = description;
+	}
+	public Position() {
+		super();
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "Position [id=" + id + ", x=" + x + ", y=" + y + ", city=" + city + ", description=" + description + "]";
 	}
 	
 	
