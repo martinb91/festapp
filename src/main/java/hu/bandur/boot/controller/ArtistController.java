@@ -51,9 +51,15 @@ public class ArtistController {
 		return artistMapper.toDTO(artistService.findById(id));
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+/*	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Artist updateById(@PathVariable int id, @RequestBody ArtistDTO artistDTO) {
 		return artistService.updateArtistById(id, artistDTO);
+	}*/
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public Artist updateById(@PathVariable int id, @RequestBody Artist artist) {
+		System.out.println(artist);
+		return artistService.updateArtistById(id, artist);
 	}
 
 	//byStyle

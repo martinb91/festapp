@@ -26,7 +26,15 @@ public class MusicStyle implements Serializable{
 		this.artist=artist;
     }
 
-    public void setId(int id) {
+	@Override
+	public String toString() {
+		return "MusicStyle{" +
+				"id=" + id +
+				", style='" + style + '\'' +
+				'}';
+	}
+
+	public void setId(int id) {
 		this.id = id;
 	}
 

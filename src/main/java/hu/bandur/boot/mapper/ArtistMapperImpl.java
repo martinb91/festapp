@@ -11,7 +11,7 @@ public class ArtistMapperImpl implements ArtistMapper{
     @Override
     public ArtistDTO toDTO(Artist artist) {
         List<String> list = new ArrayList<String>();
-        for ( MusicStyle musicStyle: artist.getMusicStyleList()){
+        for ( MusicStyle musicStyle: artist.getStyles()){
            list.add( musicStyle.getStyle());
         }
         return new ArtistDTO(artist.getName(),artist.getDescription(), artist.getId(), list);

@@ -16,7 +16,7 @@ public class Artist {
 	private int id;
 
 	@OneToMany(mappedBy = "artist")
-	private List<MusicStyle> musicStyleList;
+	private List<MusicStyle> styles;
 
 	@Override
 	public String toString() {
@@ -24,7 +24,7 @@ public class Artist {
 				"name='" + name + '\'' +
 				", description='" + description + '\'' +
 				", id=" + id +
-				", musicStyleList=" + musicStyleList +
+				", styles=" + styles +
 				", concertList=" + concertList +
 				'}';
 	}
@@ -75,12 +75,12 @@ public class Artist {
 	}
 
 
-	public List<MusicStyle> getMusicStyleList() {
-		return musicStyleList;
+	public List<MusicStyle> getStyles() {
+		return styles;
 	}
 
-	public void setMusicStyleList(List<MusicStyle> musicStyleList) {
-		this.musicStyleList = musicStyleList;
+	public void setStyles(List<MusicStyle> styles) {
+		this.styles = styles;
 	}
 	
 }

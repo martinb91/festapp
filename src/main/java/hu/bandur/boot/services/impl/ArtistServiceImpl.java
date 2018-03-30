@@ -35,7 +35,7 @@ public class ArtistServiceImpl implements ArtistService {
 	public Artist addArtist(ArtistDTO artistDTO) {
 		Artist artist = new Artist(artistDTO.getName(), artistDTO.getDescription());
 		return artistRepository.save(artist);
-	//	addStyleForFestival(artistDTO.getMusicStyleList(), artist);
+	//	addStyleForFestival(artistDTO.getStyles(), artist);
 	}
 
 	@Override
@@ -74,13 +74,27 @@ public class ArtistServiceImpl implements ArtistService {
 		return artist;
 	}
 
+	@Override
+	public Artist updateArtistById(int id, Artist artist) {
+		Artist a = artistRepository.findOne(id);
+		a.setDescription(artist.getDescription());
+		a.setName(artist.getName());
+		System.out.println(artist.getStyles());
+		musicStyleRepository.deleteMusicStyleByArtist(a);  // kell-e?
+		for (MusicStyle style : artist.getStyles()){
+			musicStyleRepository.save(new MusicStyle(style.getStyle(),a));
+		}
+		artistRepository.save(a);
+		return a;
+	}
+
 
 	@Override
 	public Artist updateArtist(ArtistDTO artistDTO) {
 		Artist artist = artistRepository.findOne(artistDTO.getId());
 		artist.setDescription(artistDTO.getDescription());
 		artist.setName(artistDTO.getName());
-//		artist.setMusicStyleList(artistDTO.getStyles());
+//		artist.setStyles(artistDTO.getStyles());
         artistRepository.save(artist);
 		return artist;
 	}

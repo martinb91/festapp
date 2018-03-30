@@ -19,4 +19,6 @@ public interface ArtistService {
     Artist findById(int id);
 
     Artist updateArtistById(int id, ArtistDTO artistDTO);
+
+    Artist updateArtistById(int id, Artist artist);
 }
