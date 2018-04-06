@@ -50,3 +50,16 @@ INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('Pálinka', (SELECT ID FR
 
 INSERT INTO USERS (USERNAME, PASSWORD, Role) VALUES ('admin@aa.hu', '123Asd7as', 'USER');
 
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo3'), (SELECT ID FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo2'), (SELECT ID FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-15');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo3'), (SELECT ID FROM FESTIVALS WHERE name='EncsFest'), '2017-11-12');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo1'), (SELECT ID FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo4'), (SELECT ID FROM FESTIVALS WHERE name='EncsFest'), '2017-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo7'), (SELECT ID FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT ID FROM ARTISTS WHERE name='Fellepo8'), (SELECT ID FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');

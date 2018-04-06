@@ -6,9 +6,7 @@ import hu.bandur.boot.dto.FestivalDTO;
 import hu.bandur.boot.entities.Concert;
 import hu.bandur.boot.services.ConcertService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -48,9 +46,9 @@ public class ConcertController {
 		addConcerts(concertDTOS);
 	}
 
-	@RequestMapping("/all")
+	@RequestMapping(path = "/all", method = RequestMethod.GET)
 	public List<Concert> allConcerts(){
-		return concertService.allConcerts();
+		return concertService.findAllConcerts();
 	}
 
 	@RequestMapping("/betweenDates")
@@ -58,9 +56,9 @@ public class ConcertController {
 		return concertService.betweenDates(after, before);
 	}
 
-	@RequestMapping("/byArtist")
-	public List<Concert> ConcertsByArtistName(@RequestBody ArtistDTO artistDTO) {
-		return concertService.ConcertsByArtistName(artistDTO);
+	@RequestMapping(path="/byArtist/{id}" )
+	public List<Concert> ConcertsByArtistName(@PathVariable int id) {
+		return concertService.ConcertsByArtistId(id);
 	}
 
 	@RequestMapping("/byFest")

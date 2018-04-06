@@ -14,13 +14,14 @@ public class Concert {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private Date begin;
+	@Column(name = "BEGINDATE")
+	private Date beginDate;
 
-	public Concert(Artist artist, Festival festival, Date begin) {
+	public Concert(Artist artist, Festival festival, Date beginDate) {
 
 		this.artist = artist;
 		this.festival = festival;
-		this.begin = begin;
+		this.beginDate = beginDate;
 	}
 	private Concert() {
 	}
@@ -49,12 +50,12 @@ public class Concert {
 		this.id = id;
 	}
 
-	public Date getBegin() {
-		return begin;
+	public Date getBeginDate() {
+		return beginDate;
 	}
 
-	public void setBegin(Date begin) {
-		this.begin = begin;
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
 	}
 
 }

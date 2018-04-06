@@ -9,11 +9,12 @@ public class ConcertDTO {
 	private int id;
 	private Date begin;
 
-	public ConcertDTO(ArtistDTO artist, FestivalDTO festival, Date begin) {
+	public ConcertDTO(ArtistDTO artist, FestivalDTO festival, Date begin, int id) {
 
 		this.artist = artist;
 		this.festival = festival;
 		this.begin = begin;
+		this.id= id;
 	}
 	private ConcertDTO() {
 	}

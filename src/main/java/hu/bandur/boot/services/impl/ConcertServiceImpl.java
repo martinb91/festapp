@@ -10,27 +10,32 @@ import hu.bandur.boot.repositories.ArtistRepository;
 import hu.bandur.boot.repositories.ConcertRepository;
 import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.services.ConcertService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Service("concertService")
+@Transactional
 public class ConcertServiceImpl implements ConcertService {
 
     private ConcertRepository concertRepository;
     private ArtistRepository artistRepository;
     private FestivalRepository festivalRepository;
 
+    @Autowired
     public void setConcertRepository(ConcertRepository concertRepository) {
         this.concertRepository = concertRepository;
     }
-
+    @Autowired
     public void setArtistRepository(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
     }
 
+    @Autowired
     public void setFestivalRepository(FestivalRepository festivalRepository) {
         this.festivalRepository = festivalRepository;
     }
@@ -55,7 +60,7 @@ public class ConcertServiceImpl implements ConcertService {
     }
 
     @Override
-    public List<Concert> allConcerts() {
+    public List<Concert> findAllConcerts() {
         return concertRepository.findAll();
     }
 
@@ -71,7 +76,7 @@ public class ConcertServiceImpl implements ConcertService {
         List<Concert> results = new ArrayList<Concert>();
         if (before.getTime() != 0) {
             for (Concert concert : concerts) {
-                if ((concert.getBegin().getTime() > after.getTime()) && (concert.getBegin().getTime() < before.getTime())) {
+                if ((concert.getBeginDate().getTime() > after.getTime()) && (concert.getBeginDate().getTime() < before.getTime())) {
                     results.add(concert);
                 }
             }
@@ -80,7 +85,7 @@ public class ConcertServiceImpl implements ConcertService {
         }
         else{
             for (Concert concert : concerts) {
-                if ((concert.getBegin().getTime() > after.getTime()) ) {
+                if ((concert.getBeginDate().getTime() > after.getTime()) ) {
                     results.add(concert);
                 }
             }
@@ -96,6 +101,11 @@ public class ConcertServiceImpl implements ConcertService {
     @Override
     public List<Concert> ConcertsByFestName(FestivalDTO festivalDTO) {
         return concertRepository.findConcertsByFestival_Name("%" + festivalDTO.getName() +"%");
+    }
+
+    @Override
+    public List<Concert> ConcertsByArtistId(int id) {
+        return concertRepository.findByArtist_Id(id);
     }
 
 }

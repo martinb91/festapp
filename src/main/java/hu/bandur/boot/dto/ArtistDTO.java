@@ -10,6 +10,7 @@ public class ArtistDTO {
 	private List<String> styles;
 
 	private ArtistDTO() {
+
 		
 	}
 
@@ -17,7 +18,7 @@ public class ArtistDTO {
 		this.name = name;
 		this.description = description;
 		this.id = id;
-		this.styles= styles;
+		this.styles = styles;
 	}
 
 	public List<String> getStyles() {
@@ -51,6 +52,5 @@ public class ArtistDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 
 }

@@ -14,7 +14,7 @@ public class ArtistMapperImpl implements ArtistMapper{
         for ( MusicStyle musicStyle: artist.getStyles()){
            list.add( musicStyle.getStyle());
         }
-        return new ArtistDTO(artist.getName(),artist.getDescription(), artist.getId(), list);
+        return new ArtistDTO(artist.getName(), artist.getDescription(), artist.getId(), list);
      }
 
     @Override

@@ -27,7 +27,8 @@ public class Festival {
 	private int ID;
 	@OneToMany(mappedBy="festival")
 	private List<FestivalStyle> festStyleList;
-	@OneToMany(mappedBy = "artist")
+
+	@OneToMany(mappedBy = "festival")
 	private List<Concert> concertList;
 	
 	public Festival(Position place, Date beginDate, Date endDate, String description, String name) {

@@ -12,4 +12,5 @@ public interface ConcertRepository extends CrudRepository<Concert, Integer>{
     void deleteByFestival_ID(int id);
     List<Concert> findConcertsByArtist_Name(String string);
     List<Concert> findConcertsByFestival_Name(String string);
+    List<Concert> findByArtist_Id(int id);
 }
