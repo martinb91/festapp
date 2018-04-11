@@ -58,7 +58,6 @@ public class ArtistController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Artist updateById(@PathVariable int id, @RequestBody Artist artist) {
-		System.out.println(artist);
 		return artistService.updateArtistById(id, artist);
 	}
 
@@ -67,7 +66,7 @@ public class ArtistController {
 	/*
 	@RequestMapping(path="update", method = RequestMethod.PUT)
 	public Festival updateFestival(@RequestBody FestivalDTO festival){
-		if(festival.getID()!= 0) {
+		if(festival.getId()!= 0) {
 			return festivalService.updateFestival(festival);
 		}
 		return null;

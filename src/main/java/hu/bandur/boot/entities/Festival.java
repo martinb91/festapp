@@ -11,8 +11,7 @@ public class Festival {
 	private Festival() {
 		super();
 	}
-	
-	
+
 	@OneToOne
 	private Position position;
 	@Column(name = "BEGINDATE")
@@ -26,7 +25,7 @@ public class Festival {
 	@Column(name="ID")
 	private int ID;
 	@OneToMany(mappedBy="festival")
-	private List<FestivalStyle> festStyleList;
+	private List<FestivalStyle> styles;
 
 	@OneToMany(mappedBy = "festival")
 	private List<Concert> concertList;
@@ -48,12 +47,12 @@ public class Festival {
 		this.ID = ID;
 	}
 
-	public List<FestivalStyle> getFestStyleList() {
-		return festStyleList;
+	public List<FestivalStyle> getStyles() {
+		return styles;
 	}
 
-	public void setFestStyleList(List<FestivalStyle> festStyleList) {
-		this.festStyleList = festStyleList;
+	public void setStyles(List<FestivalStyle> styles) {
+		this.styles = styles;
 	}
 
 	public String getName() {
@@ -98,7 +97,7 @@ public class Festival {
 
 	@Override
 	public String toString() {
-		return "FestivalDTO [name=" + name + ", place=" + position + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", description=" + description + ", ID=" + ID + ", festStyleList=" + festStyleList + "]";
+		return "Festival [name=" + name + ", place=" + position + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", description=" + description + ", ID=" + ID + ", styles=" + styles + "]";
 	}
 }

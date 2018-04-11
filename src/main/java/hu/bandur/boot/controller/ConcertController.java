@@ -57,8 +57,13 @@ public class ConcertController {
 	}
 
 	@RequestMapping(path="/byArtist/{id}" )
-	public List<Concert> ConcertsByArtistName(@PathVariable int id) {
+	public List<Concert> ConcertsByArtistId(@PathVariable int id) {
 		return concertService.ConcertsByArtistId(id);
+	}
+
+	@RequestMapping(path="/byEvent/{id}" )
+	public List<Concert> ConcertsByEventId(@PathVariable int id) {
+		return concertService.ConcertsByEventId(id);
 	}
 
 	@RequestMapping("/byFest")

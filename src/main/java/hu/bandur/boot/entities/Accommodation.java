@@ -5,15 +5,26 @@ import javax.persistence.*;
 @Entity(name = "ACCOMMONDATION")
 public class Accommodation {
 	
-	private double price; //price per for day
+	private double price; //price for a day
 	private String name;
 	private int heads;
+	@OneToOne
+	private Position address;
+	private String description;
+	private String website;
+	private String email;
+	@Column(name = "PHONENUMBER")
+	private String phoneNumber;
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name="ID")
+	private int id;
 
 	private Accommodation() {
 	}
 
-	public Accommodation(double price, String name, int heads, Position address, String description, String email, String phoneNumber) {
-
+	public Accommodation(double price, String name, int heads, Position address, String description, String email, String phoneNumber, String website) {
+		this.website=website;
 		this.price = price;
 		this.name = name;
 		this.heads = heads;
@@ -23,15 +34,14 @@ public class Accommodation {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@OneToOne
-	private Position address;
-	private String description;
-	private String email;
-	private String phoneNumber;
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private int id;
-	
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
 	public double getPrice() {
 		return price;
 	}

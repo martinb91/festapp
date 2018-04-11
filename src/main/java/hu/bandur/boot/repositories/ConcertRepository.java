@@ -13,4 +13,7 @@ public interface ConcertRepository extends CrudRepository<Concert, Integer>{
     List<Concert> findConcertsByArtist_Name(String string);
     List<Concert> findConcertsByFestival_Name(String string);
     List<Concert> findByArtist_Id(int id);
+
+    List<Concert> findByFestival_ID(int id);
+
 }

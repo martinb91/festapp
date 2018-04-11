@@ -40,7 +40,8 @@ public class AccommodationServiceImpl implements AccommodationService {
 		Position position = new Position(positionDTO.getX(),positionDTO.getY(), positionDTO.getCity(),positionDTO.getDescription());
 		System.out.println(position);
 		positionRepository.save(position);
-		accommondationRepository.save(new Accommodation(newA.getPrice(),newA.getName(),newA.getHeads(), position, newA.getDescription(),newA.getEmail(), newA.getPhoneNumber()));
+		accommondationRepository.save(new Accommodation(newA.getPrice(),newA.getName(),newA.getHeads(), position, newA.getDescription(),newA.getEmail(), newA.getPhoneNumber(), null));
+		//az utolsó sort majd javítani (a null érték csak a konverzió miatt van)
 	}
 
 	public List<Accommodation> FindAllWhatNearTheFest(FestivalDTO festival){
@@ -82,6 +83,11 @@ public class AccommodationServiceImpl implements AccommodationService {
 	public List<Accommodation> findByName(AccommodationDTO accommodationDTO) {
 		accommodationDTO.getAddress().getCity();
 		return accommondationRepository.findByName(accommodationDTO.getName());
+	}
+
+	@Override
+	public List<Accommodation> findAccommodations() {
+		return accommondationRepository.findAll();
 	}
 
 	@Override

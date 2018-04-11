@@ -41,13 +41,18 @@ public class AccommodationController {
         accommodationService.modifyAccommodation(accommodationDTO);
     }
 
-    @RequestMapping(path = "byName", method = RequestMethod.POST)
+    @RequestMapping(path = "/byName", method = RequestMethod.POST)
     public List<Accommodation> FindByName(@RequestBody AccommodationDTO accommodationDTO){
        return accommodationService.findByName(accommodationDTO);
     }
 
-    @RequestMapping(path = "byCity", method = RequestMethod.POST)
+    @RequestMapping(path = "/byCity", method = RequestMethod.POST)
     public List<Accommodation> FindByAddress(@RequestBody AccommodationDTO accommodationDTO){
         return accommodationService.findByAddress(accommodationDTO);
+    }
+
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<Accommodation> FindAll(){
+        return accommodationService.findAccommodations();
     }
 }
