@@ -9,20 +9,10 @@ import java.util.List;
 @Entity
 @Table(name="FESTIVALS")
 public class Festival {
-<<<<<<< HEAD
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ID")
 	private int id;
-=======
-	
-	private Festival() {
-		super();
-	}
-
-	@OneToOne
-	private Position position;
->>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
 	@Column(name = "BEGINDATE")
 	private Date beginDate;
 	@Column(name = "ENDDATE")
@@ -33,11 +23,7 @@ public class Festival {
 	private Position position;
 	@OneToMany(mappedBy="festival")
 	private List<FestivalStyle> styles;
-<<<<<<< HEAD
 	@JsonIgnore
-=======
-
->>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
 	@OneToMany(mappedBy = "festival")
 	private List<Concert> concertList;
 
@@ -75,21 +61,12 @@ public class Festival {
 		this.endDate = endDate;
 	}
 
-<<<<<<< HEAD
 	public String getDescription() {
 		return description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-=======
-	public List<FestivalStyle> getStyles() {
-		return styles;
-	}
-
-	public void setStyles(List<FestivalStyle> styles) {
-		this.styles = styles;
->>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
 	}
 
 	public String getName() {
@@ -126,7 +103,6 @@ public class Festival {
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
 		return "Festival{" +
 				"id=" + id +
 				", beginDate=" + beginDate +
@@ -137,9 +113,5 @@ public class Festival {
 				", styles=" + styles +
 				", concertList=" + concertList +
 				'}';
-=======
-		return "Festival [name=" + name + ", place=" + position + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", description=" + description + ", ID=" + ID + ", styles=" + styles + "]";
->>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
 	}
 }

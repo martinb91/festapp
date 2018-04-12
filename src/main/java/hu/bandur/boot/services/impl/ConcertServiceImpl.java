@@ -56,11 +56,8 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     public void deleteConcertsForFestival(FestivalDTO festivalDTO) {
-<<<<<<< HEAD
+
         concertRepository.deleteByFestival_Id(festivalDTO.getId());
-=======
-        concertRepository.deleteByFestival_ID(festivalDTO.getId());
->>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
     }
 
     @Override
@@ -114,11 +111,8 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     public List<Concert> ConcertsByEventId(int id) {
-<<<<<<< HEAD
         return concertRepository.findByFestival_Id(id);
-=======
-        return concertRepository.findByFestival_ID(id);
->>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
+
     }
 
 }
