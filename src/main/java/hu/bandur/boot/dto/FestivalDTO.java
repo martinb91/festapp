@@ -1,9 +1,5 @@
 package hu.bandur.boot.dto;
 
-import hu.bandur.boot.entities.FestivalStyle;
-import hu.bandur.boot.entities.Position;
-
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -16,37 +12,39 @@ public class FestivalDTO {
 
 	private PositionDTO position;
 	private Date beginDate;
-	private Date endDate;
-	private String description;
-	private String name;
-	private int ID;
 
-	public int getID() {
-		return ID;
-	}
-
-	public void setID(int ID) {
-		this.ID = ID;
-	}
-
-	private List<FestivalStyleDTO> festStyleList;
-	
-	
-	public FestivalDTO(PositionDTO place, Date beginDate, Date endDate, String description, String name) {
-		super();
-		this.position = place;
+	public FestivalDTO(PositionDTO position, Date beginDate, Date endDate,
+					   String description, String name, int id, List<FestivalStyleDTO> styles) {
+		this.position = position;
 		this.beginDate = beginDate;
 		this.endDate = endDate;
 		this.description = description;
 		this.name = name;
+		this.id = id;
+		this.styles = styles;
 	}
 
-	public List<FestivalStyleDTO> getFestStyleList() {
-		return festStyleList;
+	private Date endDate;
+	private String description;
+	private String name;
+	private int id;
+	private List<FestivalStyleDTO> styles;
+
+
+	public int getId() {
+		return id;
 	}
 
-	public void setFestStyleList(List<FestivalStyleDTO> festStyleList) {
-		this.festStyleList = festStyleList;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<FestivalStyleDTO> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(List<FestivalStyleDTO> styles) {
+		this.styles = styles;
 	}
 
 	public String getName() {
@@ -91,7 +89,7 @@ public class FestivalDTO {
 
 	@Override
 	public String toString() {
-		return "FestivalDTO [name=" + name + ", place=" + position + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", description=" + description + ", festID=" + ID + ", festStyleList=" + festStyleList + "]";
+		return "FestivalDTO [name=" + name + ", place=" + position.toString() + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", description=" + description + ", festID=" + id + ", styles=" + styles.toString() + "]";
 	}
 }

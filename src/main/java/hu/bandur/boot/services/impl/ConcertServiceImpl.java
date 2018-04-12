@@ -46,7 +46,7 @@ public class ConcertServiceImpl implements ConcertService {
         //mivel a koncerteket egyszerre csak egy fesztiválhoz feszem fel, ezért elég az első elem festDTO id-ját kiolvasni.
         FestivalDTO festivalDTO = concertDTOs.get(0).getFestival();
         deleteConcertsForFestival(festivalDTO);
-        Festival festival = festivalRepository.findOne(festivalDTO.getID());
+        Festival festival = festivalRepository.findOne(festivalDTO.getId());
         for (ConcertDTO concertDTO : concertDTOs) {
             Artist artist = artistRepository.findOne(concertDTO.getArtist().getId());
             Date date = concertDTO.getBegin();
@@ -56,7 +56,7 @@ public class ConcertServiceImpl implements ConcertService {
 
     @Override
     public void deleteConcertsForFestival(FestivalDTO festivalDTO) {
-        concertRepository.deleteByFestival_ID(festivalDTO.getID());
+        concertRepository.deleteByFestival_Id(festivalDTO.getId());
     }
 
     @Override
@@ -106,6 +106,11 @@ public class ConcertServiceImpl implements ConcertService {
     @Override
     public List<Concert> ConcertsByArtistId(int id) {
         return concertRepository.findByArtist_Id(id);
+    }
+
+    @Override
+    public List<Concert> ConcertsByEventId(int id) {
+        return concertRepository.findByFestival_Id(id);
     }
 
 }

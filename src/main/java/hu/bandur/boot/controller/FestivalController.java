@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/festival")
 public class FestivalController {
@@ -29,12 +30,11 @@ public class FestivalController {
 		return festivalService.findAllFestival();
 	}
 
-	@RequestMapping(path="update", method = RequestMethod.PUT)
-	public Festival updateFestival(@RequestBody FestivalDTO festival){
-		if(festival.getID()!= 0) {
-			return festivalService.updateFestival(festival);
-		}
-		return null;
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public Festival updateById(@PathVariable int id, @RequestBody Festival festival) {
+		System.out.println(id);
+		System.out.println(festival);
+		return festival;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

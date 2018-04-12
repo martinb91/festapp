@@ -15,47 +15,22 @@ public class Artist {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "artist")
 	private List<MusicStyle> styles;
-
-	@Override
-	public String toString() {
-		return "Artist{" +
-				"name='" + name + '\'' +
-				", description='" + description + '\'' +
-				", id=" + id +
-				", styles=" + styles +
-				", concertList=" + concertList +
-				'}';
-	}
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "artist")
 	private List<Concert> concertList;
 
-	public List<Concert> getConcertList() {
-		return concertList;
-	}
-
-	public void setConcertList(List<Concert> concertList) {
-		this.concertList = concertList;
-	}
-
 	private Artist() {
 		
 	}
 
-	public Artist(String name, String description) {
+	public Artist(String name, String description, List<MusicStyle> styles) {
 		this.name = name;
 		this.description = description;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		this.styles = styles;
 	}
 
 	public String getName() {
@@ -74,6 +49,13 @@ public class Artist {
 		this.description = description;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public List<MusicStyle> getStyles() {
 		return styles;
@@ -82,5 +64,23 @@ public class Artist {
 	public void setStyles(List<MusicStyle> styles) {
 		this.styles = styles;
 	}
-	
+
+	public List<Concert> getConcertList() {
+		return concertList;
+	}
+
+	public void setConcertList(List<Concert> concertList) {
+		this.concertList = concertList;
+	}
+
+	@Override
+	public String toString() {
+		return "Artist{" +
+				"name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", id=" + id +
+				", styles=" + styles +
+				", concertList=" + concertList +
+				'}';
+	}
 }

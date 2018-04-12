@@ -23,6 +23,7 @@ public class Concert {
 		this.festival = festival;
 		this.beginDate = beginDate;
 	}
+
 	private Concert() {
 	}
 
@@ -58,4 +59,13 @@ public class Concert {
 		this.beginDate = beginDate;
 	}
 
+	@Override
+	public String toString() {
+		return "Concert{" +
+				"artist=" + artist +
+				", festival=" + festival +
+				", id=" + id +
+				", beginDate=" + beginDate +
+				'}';
+	}
 }

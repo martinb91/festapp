@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="MUSICSTYLES")
-public class MusicStyle implements Serializable{
+public class MusicStyle {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,14 +25,6 @@ public class MusicStyle implements Serializable{
 		this.style = style;
 		this.artist=artist;
     }
-
-	@Override
-	public String toString() {
-		return "MusicStyle{" +
-				"id=" + id +
-				", style='" + style + '\'' +
-				'}';
-	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -58,5 +50,11 @@ public class MusicStyle implements Serializable{
 		this.style = style;
 	}
 
-
+	@Override
+	public String toString() {
+		return "MusicStyle{" +
+				"id=" + id +
+				", style='" + style + '\'' +
+				'}';
+	}
 }

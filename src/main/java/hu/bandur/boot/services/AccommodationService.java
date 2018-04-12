@@ -13,4 +13,5 @@ public interface AccommodationService {
     void modifyAccommodation(AccommodationDTO accommodationDTO);
     List<Accommodation> findByAddress(AccommodationDTO accommodationDTO);
     List<Accommodation> findByName(AccommodationDTO accommodationDTO);
+    List<Accommodation> findAccommodations();
 }

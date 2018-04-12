@@ -1,11 +1,5 @@
 package hu.bandur.boot.entities;
 
-
-/*******************************************************************************
- * 2017, this is the user entity class ,
- * this class implements users details of the spring security framework
- *******************************************************************************/
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -18,39 +12,20 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
-/**
- * Description of User.
- * 
- * @author kamal berriga
- */
 @Entity
 @Table(name="USERS")
 @Scope("session")
 public  class User implements UserDetails{
 	public static enum Role{ USER }
-	/**
-	 * Description of the property id.
-	 */
+
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id ;
-	/**
-	 * Description of the property email.
-	 */
 	@Column(unique = true)
 	private String username ;
-	/**
-	 * Description of the property password.
-	 */
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password ;
-	/**
-	 * Description of the property role , to grant authority to the user .
-	 */
     private String  role;
-    /**
-	 * Description of the property full name.
-	 */
     private String fullName;
 
     public User(){
@@ -62,6 +37,7 @@ public  class User implements UserDetails{
     	this.password= password;
     	this.fullName=fullName;
     }
+
 	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
@@ -111,7 +87,6 @@ public  class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return username;
 	}
-	
 
 	public String getRole() {
 		return role;

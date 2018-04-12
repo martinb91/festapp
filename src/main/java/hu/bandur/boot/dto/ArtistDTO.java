@@ -1,41 +1,23 @@
 package hu.bandur.boot.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ArtistDTO {
+public class ArtistDTO implements Serializable {
 
 	private String name;
 	private String description;
 	private int id;
-	private List<String> styles;
+	private List<MusicStyleDTO> styles;
 
-	private ArtistDTO() {
-
-		
-	}
-
-	public ArtistDTO(String name, String description, int id, List<String> styles) {
+	public ArtistDTO(String name, String description, int id, List<MusicStyleDTO> styles) {
 		this.name = name;
 		this.description = description;
 		this.id = id;
 		this.styles = styles;
 	}
 
-	public List<String> getStyles() {
-		return styles;
-	}
-
-	public void setStyles(List<String> styles) {
-		this.styles = styles;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	public ArtistDTO() {}
 
 	public String getName() {
 		return name;
@@ -53,4 +35,29 @@ public class ArtistDTO {
 		this.description = description;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<MusicStyleDTO> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(List<MusicStyleDTO> styles) {
+		this.styles = styles;
+	}
+
+	@Override
+	public String toString() {
+		return "ArtistDTO{" +
+				"name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", id=" + id +
+//				", styles=" + styles +
+				'}';
+	}
 }

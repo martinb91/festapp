@@ -8,17 +8,17 @@ import java.util.List;
 
 public interface ArtistService {
 
-
-    Artist addArtist(ArtistDTO artistDTO);
-    void addStyleForFestival(List<MusicStyleDTO> musicStyleDTOs, Artist artist);
-    Artist updateArtist(ArtistDTO artistDTO);
     List<Artist> findAllArtists();
+    void addStyles(Artist artist);
+    Artist findById(int id);
+    Artist updateArtist(ArtistDTO artistDTO);
+    Artist addArtist(ArtistDTO artistDTO);
+    List<Artist> getArtistsByStyleName(String styleName);
 
+    //---- these we don't use until now
     List<Artist> findByName(String s);
 
-    Artist findById(int id);
+    boolean deleteArtistById(int id);
 
-    Artist updateArtistById(int id, ArtistDTO artistDTO);
 
-    Artist updateArtistById(int id, Artist artist);
 }

@@ -54,7 +54,7 @@ public class FestivalServiceImpl  implements FestivalService{
 
 	@Override
 	public Festival updateFestival(FestivalDTO festivalDTO) {
-		Festival festival = festivalRepository.findOne(festivalDTO.getID());
+		Festival festival = festivalRepository.findOne(festivalDTO.getId());
 		festival.setBeginDate(festivalDTO.getBeginDate());
 		festival.setEndDate(festivalDTO.getEndDate());
 		festival.setDescription(festivalDTO.getDescription());
@@ -77,7 +77,7 @@ public class FestivalServiceImpl  implements FestivalService{
 		this.positionRepository.save(place);
 		Festival f = new Festival(place, fest.getBeginDate(), fest.getEndDate(), fest.getDescription(), fest.getName());
 		this.festivalRepository.save(f);
-		addStyleForFestival(fest.getFestStyleList(), f);
+		addStyleForFestival(fest.getStyles(), f);
 	}
 
 }

@@ -18,4 +18,6 @@ public interface ConcertService {
     List<Concert> ConcertsByFestName(FestivalDTO festivalDTO);
 
     List<Concert> ConcertsByArtistId(int id);
+
+    List<Concert> ConcertsByEventId(int id);
 }
