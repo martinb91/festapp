@@ -4,17 +4,17 @@ import java.util.Date;
 import java.util.List;
 
 public class FestivalDTO {
-	
-	private FestivalDTO() {
-		super();
-	}
-	
-
 	private PositionDTO position;
 	private Date beginDate;
+	private Date endDate;
+	private String description;
+	private String name;
+	private int id;
+	private List<FestivalStyleDTO> styles;
 
-	public FestivalDTO(PositionDTO position, Date beginDate, Date endDate,
-					   String description, String name, int id, List<FestivalStyleDTO> styles) {
+	public FestivalDTO() { }
+
+	public FestivalDTO(PositionDTO position, Date beginDate, Date endDate, String description, String name, int id, List<FestivalStyleDTO> styles) {
 		this.position = position;
 		this.beginDate = beginDate;
 		this.endDate = endDate;
@@ -22,37 +22,6 @@ public class FestivalDTO {
 		this.name = name;
 		this.id = id;
 		this.styles = styles;
-	}
-
-	private Date endDate;
-	private String description;
-	private String name;
-	private int id;
-	private List<FestivalStyleDTO> styles;
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public List<FestivalStyleDTO> getStyles() {
-		return styles;
-	}
-
-	public void setStyles(List<FestivalStyleDTO> styles) {
-		this.styles = styles;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String festivalName) {
-		this.name = festivalName;
 	}
 
 	public PositionDTO getPosition() {
@@ -87,9 +56,40 @@ public class FestivalDTO {
 		this.description = description;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<FestivalStyleDTO> getStyles() {
+		return styles;
+	}
+
+	public void setStyles(List<FestivalStyleDTO> styles) {
+		this.styles = styles;
+	}
+
 	@Override
 	public String toString() {
-		return "FestivalDTO [name=" + name + ", place=" + position.toString() + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", description=" + description + ", festID=" + id + ", styles=" + styles.toString() + "]";
+		return "FestivalDTO{" +
+				"position=" + position +
+				", beginDate=" + beginDate +
+				", endDate=" + endDate +
+				", description='" + description + '\'' +
+				", name='" + name + '\'' +
+				", id=" + id +
+				", styles=" + styles +
+				'}';
 	}
 }

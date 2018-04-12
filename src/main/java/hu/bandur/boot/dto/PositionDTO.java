@@ -41,19 +41,19 @@ public class PositionDTO {
 	public void setDescription(String others) {
 		this.description = others;
 	}
-	
-	public PositionDTO(double x, double y, String city, String description) {
-		super();
+
+	public PositionDTO(int id, double x, double y, String city, String description) {
+		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.city = city;
 		this.description = description;
 	}
+
 	public PositionDTO() {
 		super();
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "PositionDTO [id=" + id + ", x=" + x + ", y=" + y + ", city=" + city + ", description=" + description + "]";

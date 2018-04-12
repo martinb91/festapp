@@ -19,11 +19,6 @@ public class FestivalController {
 	public void setFestivalService(FestivalService festivalService) {
 		this.festivalService = festivalService;
 	}
-
-	@RequestMapping(path = "/new.json", method = RequestMethod.POST)
-	public void create(@RequestBody FestivalDTO f) {
-		festivalService.addFestival(f);
-	}
 	
 	@RequestMapping(path = "/all.json", method = RequestMethod.GET)
 	public List<Festival> all() {
@@ -40,6 +35,12 @@ public class FestivalController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Festival festivalById(@PathVariable int id) {
 		return festivalService.findById(id);
+	}
+
+
+	@RequestMapping(path = "/new.json", method = RequestMethod.POST)
+	public void create(@RequestBody FestivalDTO f) {
+		festivalService.addFestival(f);
 	}
 
 	//addExtraStyleForAnExistFest

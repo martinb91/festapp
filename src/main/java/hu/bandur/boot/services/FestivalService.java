@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface FestivalService {
 
-	void addFestival(FestivalDTO fest);
 	List<Festival> findAllFestival();
+
+	void addFestival(FestivalDTO fest);
 	void addStyleForFestival(List<FestivalStyleDTO> festivalStyle, Festival festival);
 	Festival updateFestival(FestivalDTO festivalDTO);
-
 	Festival findById(int id);
 }
