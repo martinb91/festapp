@@ -10,6 +10,7 @@ import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.repositories.FestivalStyleRepository;
 import hu.bandur.boot.repositories.PositionRepository;
 import hu.bandur.boot.services.FestivalService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,12 @@ public class FestivalServiceImpl  implements FestivalService{
 	private FestivalRepository festivalRepository;
 	private PositionRepository positionRepository;
 	private FestivalStyleRepository festivalStyleRepository;
+	private ModelMapper modelMapper;
+
+	@Autowired
+	public void setModelMapper(ModelMapper modelMapper) {
+		this.modelMapper = modelMapper;
+	}
 
 	@Autowired
 	public void setFestivalRepository(FestivalRepository festivalRepository) {
@@ -39,10 +46,25 @@ public class FestivalServiceImpl  implements FestivalService{
 		this.festivalStyleRepository = festivalStyleRepository;
 	}
 
-
 	public List<Festival> findAllFestival(){
-        List<Festival> f = this.festivalRepository.findAll();
-		return f;
+        List<Festival> festivals = this.festivalRepository.findAll();
+		return festivals;
+	}
+
+	@Override
+	public Festival findById(int id) {
+		return festivalRepository.findOne(id);
+	}
+
+	@Override
+	public void addFestival(FestivalDTO fest) {
+		PositionDTO p = fest.getPosition();
+		Position place = new Position(p.getX(), p.getY(), p.getCity(), p.getDescription());
+		System.out.println(place);
+		this.positionRepository.save(place);
+		Festival f = new Festival(place, fest.getBeginDate(), fest.getEndDate(), fest.getDescription(), fest.getName());
+		this.festivalRepository.save(f);
+		addStyleForFestival(fest.getStyles(), f);
 	}
 
 	@Override
@@ -59,25 +81,9 @@ public class FestivalServiceImpl  implements FestivalService{
 		festival.setEndDate(festivalDTO.getEndDate());
 		festival.setDescription(festivalDTO.getDescription());
 		festival.setName(festivalDTO.getName());
-     //   PositionDTO positionDTO = festivalDTO.getPosition();
-        festivalRepository.save(festival);
+		//   PositionDTO positionDTO = festivalDTO.getPosition();
+		festivalRepository.save(festival);
 		return festival;
-	}
-
-	@Override
-	public Festival findById(int id) {
-		return festivalRepository.findOne(id);
-	}
-
-
-	public void addFestival(FestivalDTO fest) {
-		PositionDTO p = fest.getPosition();
-		Position place = new Position(p.getX(), p.getY(), p.getCity(), p.getDescription());
-		System.out.println(place);
-		this.positionRepository.save(place);
-		Festival f = new Festival(place, fest.getBeginDate(), fest.getEndDate(), fest.getDescription(), fest.getName());
-		this.festivalRepository.save(f);
-		addStyleForFestival(fest.getStyles(), f);
 	}
 
 }
