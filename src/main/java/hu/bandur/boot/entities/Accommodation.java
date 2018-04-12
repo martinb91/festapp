@@ -34,6 +34,17 @@ public class Accommodation {
 		this.phoneNumber = phoneNumber;
 	}
 
+<<<<<<< HEAD
+=======
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+>>>>>>> 33f7f8f21c8e1f4ec6997fed5deee1ab71089041
 	public double getPrice() {
 		return price;
 	}
