@@ -5,6 +5,7 @@ import hu.bandur.boot.dto.FestivalStyleDTO;
 import hu.bandur.boot.dto.PositionDTO;
 import hu.bandur.boot.entities.Festival;
 import hu.bandur.boot.entities.FestivalStyle;
+import hu.bandur.boot.entities.MusicStyle;
 import hu.bandur.boot.entities.Position;
 import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.repositories.FestivalStyleRepository;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,33 +59,49 @@ public class FestivalServiceImpl  implements FestivalService{
 	}
 
 	@Override
-	public void addFestival(FestivalDTO fest) {
-		PositionDTO p = fest.getPosition();
-		Position place = new Position(p.getX(), p.getY(), p.getCity(), p.getDescription());
-		System.out.println(place);
-		this.positionRepository.save(place);
-		Festival f = new Festival(place, fest.getBeginDate(), fest.getEndDate(), fest.getDescription(), fest.getName());
-		this.festivalRepository.save(f);
-		addStyleForFestival(fest.getStyles(), f);
+	public void changeStyles(Festival festival) {
+		List<FestivalStyle> fs = new ArrayList<>();
+		for (FestivalStyle festivalStyle: festivalStyleRepository.findFestivalStyleByFestival(festival)) {
+			boolean var = false;
+			for(FestivalStyle m : festival.getStyles()){
+				if (m.getId()==festivalStyle.getId() && !m.getStyle().equals("")){
+					var = true;
+					break;
+				}
+			}
+			if (!var){
+				fs.add(festivalStyle);
+			}
+		}
+		festivalStyleRepository.delete(fs);
+		addStyles(festival);
 	}
 
 	@Override
-	public void addStyleForFestival(List<FestivalStyleDTO> festivalStyle, Festival festival) {
-		for(FestivalStyleDTO f : festivalStyle){
-			festivalStyleRepository.save(new FestivalStyle(f.getStyle(), festival));
+	public void addStyles(Festival festival) {
+		for(FestivalStyle fs : festival.getStyles()) {
+			if (fs.getStyle() != null && !fs.getStyle().equals("") ) {
+				if (fs.getId() == 0 || ((Integer) fs.getId()) == null) {
+					festivalStyleRepository.save(new FestivalStyle(fs.getStyle(), festival));
+				} else {
+					fs.setFestival(festival);
+					festivalStyleRepository.save(fs);
+				}
+			}
 		}
 	}
 
 	@Override
-	public Festival updateFestival(FestivalDTO festivalDTO) {
-		Festival festival = festivalRepository.findOne(festivalDTO.getId());
-		festival.setBeginDate(festivalDTO.getBeginDate());
-		festival.setEndDate(festivalDTO.getEndDate());
-		festival.setDescription(festivalDTO.getDescription());
-		festival.setName(festivalDTO.getName());
-		//   PositionDTO positionDTO = festivalDTO.getPosition();
-		festivalRepository.save(festival);
-		return festival;
+	public Festival addFestival(Festival fest) {
+		changeStyles(fest);
+		positionRepository.save(fest.getPosition());
+		return festivalRepository.save(fest);
+	}
+
+
+	@Override
+	public Festival updateFestival(Festival festival) {
+	return addFestival(festival);
 	}
 
 }

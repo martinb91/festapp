@@ -4,19 +4,24 @@ import hu.bandur.boot.dto.AccommodationDTO;
 import hu.bandur.boot.dto.FestivalDTO;
 import hu.bandur.boot.entities.Accommodation;
 import hu.bandur.boot.services.AccommodationService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/accommodation")
 public class AccommodationController {
 
-    AccommodationService accommodationService;
+    private AccommodationService accommodationService;
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     @Autowired
     public void setAccommodationService(AccommodationService accommodationService) {
@@ -28,14 +33,21 @@ public class AccommodationController {
         accommodationService.addAccommodation(newA);
     }
 
-    @RequestMapping(path = "/nearTheFest", method = RequestMethod.POST)
-    public List<Accommodation> FindAllWhatNearTheFest(@RequestBody FestivalDTO festival){
-        return accommodationService.FindAllWhatNearTheFest(festival);
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<AccommodationDTO> FindAll() {
+        List<AccommodationDTO> accommodationDTOS = new ArrayList<>();
+        for (Accommodation a : accommodationService.findAccommodations()) {
+            accommodationDTOS.add(modelMapper.map(a, AccommodationDTO.class));
+        }
+        return accommodationDTOS;
     }
 
-    //ModifyAcc
-    //ByName or ByCity
+    @RequestMapping(path = "/nearTheFest/{id}", method = RequestMethod.GET)
+    public List<AccommodationDTO> FindAllWhatNearTheFest(@PathVariable int id){
+        return accommodationService.FindAllWhatNearTheFest(id);
+    }
 
+    //---- Ezeket még aktualizálni
     @RequestMapping(path = "/modify", method = RequestMethod.PUT)
     public void modifyAccommodation(@RequestBody AccommodationDTO accommodationDTO){
         accommodationService.modifyAccommodation(accommodationDTO);
@@ -43,7 +55,7 @@ public class AccommodationController {
 
     @RequestMapping(path = "/byName", method = RequestMethod.POST)
     public List<Accommodation> FindByName(@RequestBody AccommodationDTO accommodationDTO){
-       return accommodationService.findByName(accommodationDTO);
+        return accommodationService.findByName(accommodationDTO);
     }
 
     @RequestMapping(path = "/byCity", method = RequestMethod.POST)
@@ -51,8 +63,8 @@ public class AccommodationController {
         return accommodationService.findByAddress(accommodationDTO);
     }
 
-    @RequestMapping(path = "/all", method = RequestMethod.GET)
-    public List<Accommodation> FindAll(){
-        return accommodationService.findAccommodations();
-    }
+
+    //ModifyAcc
+    //ByName or ByCity
+
 }

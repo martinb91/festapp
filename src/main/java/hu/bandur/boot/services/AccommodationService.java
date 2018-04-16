@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AccommodationService {
     void addAccommodation(AccommodationDTO newA);
-    List<Accommodation> FindAllWhatNearTheFest(FestivalDTO festival);
+    List<AccommodationDTO> FindAllWhatNearTheFest(int id);
 
     void modifyAccommodation(AccommodationDTO accommodationDTO);
     List<Accommodation> findByAddress(AccommodationDTO accommodationDTO);

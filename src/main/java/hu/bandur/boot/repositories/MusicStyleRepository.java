@@ -11,6 +11,8 @@ public interface MusicStyleRepository extends CrudRepository<MusicStyle, Integer
 
     List<MusicStyle> findMusicStyleByStyleLike(String style);
     void deleteMusicStyleByArtist( Artist artist);
+    List<MusicStyle> findByArtist(Artist artist);
+    void deleteById(int id);
 
 
 }

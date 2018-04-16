@@ -43,18 +43,18 @@ public class FestivalController {
 	}
 //------------
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Festival updateById(@PathVariable int id, @RequestBody Festival festival) {
-		System.out.println(id);
-		System.out.println(festival);
-		return festival;
+	public FestivalDTO updateById(@PathVariable int id, @RequestBody FestivalDTO festivalDTO) {
+		return modelMapper.map(
+				festivalService.updateFestival(
+						modelMapper.map(festivalDTO, Festival.class)),
+				FestivalDTO.class);
 	}
 
 	@RequestMapping(path = "/new.json", method = RequestMethod.POST)
 	public void create(@RequestBody FestivalDTO f) {
-		festivalService.addFestival(f);
+		festivalService.addFestival(modelMapper.map(f, Festival.class));
 	}
 
-	//addExtraStyleForAnExistFest
 	//byName
 	//Positon+xkm(Település név alapján googlemapsAPI vagy másik freemapAPI alapján el lehet valszeg kérni a koordinátákat.
 	// így elég a koordinátákat letárolni)

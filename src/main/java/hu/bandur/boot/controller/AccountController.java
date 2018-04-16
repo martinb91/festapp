@@ -12,10 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
-/**
- * @author kamal berriga
- *
- */
 @RestController
 @RequestMapping("account")
 public class AccountController {

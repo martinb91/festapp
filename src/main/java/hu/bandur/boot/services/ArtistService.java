@@ -9,6 +9,7 @@ import java.util.List;
 public interface ArtistService {
 
     List<Artist> findAllArtists();
+    void changeStyles(Artist artist);
     void addStyles(Artist artist);
     Artist findById(int id);
     Artist updateArtist(ArtistDTO artistDTO);

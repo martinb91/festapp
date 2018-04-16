@@ -50,10 +50,61 @@ public class ArtistServiceImpl implements ArtistService {
 	@Override
 	public Artist addArtist(ArtistDTO artistDTO) {
 		Artist artist = modelMapper.map(artistDTO, Artist.class);
-		this.addStyles(artist);
-		artist.setStyles(null);
-		artistRepository.save(artist);
-		return artist;
+		this.changeStyles(artist);
+//		 artist.setStyles(this.setArtistReferencesForStyles(artist, artist.getStyles()));
+		return artistRepository.save(artist);
+	}
+
+	@Override
+	public Artist updateArtist(ArtistDTO artistDTO) {
+/*		Artist artist = modelMapper.map(artistDTO, Artist.class);
+		musicStyleRepository.deleteMusicStyleByArtist(artist);*/
+		return addArtist(artistDTO);
+	}
+
+    @Override
+    public void changeStyles(Artist artist) {
+		List<MusicStyle> ms = new ArrayList<>();
+		for (MusicStyle musicStyle: musicStyleRepository.findByArtist(artist)) {
+			boolean var = false;
+			for(MusicStyle m : artist.getStyles()){
+				if (m.getId()==musicStyle.getId() && !m.getStyle().equals("")){
+					var = true;
+					break;
+				}
+			}
+			if (!var){
+				ms.add(musicStyle);
+			}
+		}
+		musicStyleRepository.delete(ms);
+		addStyles(artist);
+    }
+
+	@Override
+	public void addStyles(Artist artist) {
+		for(MusicStyle m : artist.getStyles()) {
+			if (m.getStyle() != null && !m.getStyle().equals("") ) {
+				if (m.getId() == 0 || ((Integer) m.getId()) == null) {
+					musicStyleRepository.save(new MusicStyle(m.getStyle(), artist));
+				} else {
+					m.setArtist(artist);
+					musicStyleRepository.save(m);
+				}
+			}
+		}
+	}
+
+	@Override
+    public List<Artist> findByName(String s) {
+        String str = "%" + s +"%";
+        return artistRepository.findByNameLike(str);
+    }
+
+	@Override
+	public boolean deleteArtistById(int id) {
+		musicStyleRepository.deleteMusicStyleByArtist(artistRepository.findOne(id));
+		return artistRepository.deleteById(id);
 	}
 
 	@Override
@@ -66,37 +117,10 @@ public class ArtistServiceImpl implements ArtistService {
 		return artists;
 	}
 
-	@Override
-	public Artist updateArtist(ArtistDTO artistDTO) {
-		Artist artist = modelMapper.map(artistDTO, Artist.class);
-		musicStyleRepository.deleteMusicStyleByArtist(artist);
-		return addArtist(artistDTO);
-	}
-
-    @Override
-    public void addStyles(Artist artist) {
-        for(MusicStyle m : artist.getStyles()) {
-			if (m.getStyle() != null && !m.getStyle().equals("") ) {
-				if (m.getId() == 0 || ((Integer) m.getId()) == null) {
-					musicStyleRepository.save(new MusicStyle(m.getStyle(), artist));
-				} else {	// hiába jön id-val, mindig új id-t ad a db vagy a keretrendszer neki, így alapvetően mindegy, is ez az elágazás.
-					m.setArtist(artist);
-					musicStyleRepository.save(m);
-				}
-			}
-		}
-    }
-
-    @Override
-    public List<Artist> findByName(String s) {
-        String str = "%" + s +"%";
-        return artistRepository.findByNameLike(str);
-    }
-
-	@Override
-	public boolean deleteArtistById(int id) {
-		musicStyleRepository.deleteMusicStyleByArtist(artistRepository.findOne(id));
-		return artistRepository.deleteById(id);
-	}
-
+/*	private List<MusicStyle> setArtistReferencesForStyles(Artist artist, List<MusicStyle> musicStyles){ Ha a fellépőt lementem nem mentődnek vele a stílusai, így ezt külön kell menteni.
+    	for (MusicStyle ms : musicStyles) {
+    		ms.setArtist(artist);
+    	}
+    	return musicStyles;
+	}*/
 }

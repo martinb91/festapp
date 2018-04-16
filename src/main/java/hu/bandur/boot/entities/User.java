@@ -27,15 +27,18 @@ public  class User implements UserDetails{
 	private String password ;
     private String  role;
     private String fullName;
+	private String email;
+
 
     public User(){
     	
     }
     
-    public User(String username, String password, String fullName){
+    public User(String username, String password, String fullName, String email){
     	this.username=username;
     	this.password= password;
     	this.fullName=fullName;
+    	this.email=email;
     }
 
 	@JsonIgnore
@@ -115,7 +118,12 @@ public  class User implements UserDetails{
 	public Long getId() {
 		return id;
 	}
-	
-	
-	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
