@@ -25,6 +25,7 @@ public class AccountController {
 	@CrossOrigin
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@RequestBody User newUser) {
+		System.out.println(newUser);
 		if (userService.find(newUser.getUsername()) != null) {
 			logger.error("username Already exist " + newUser.getUsername());
 			return new ResponseEntity(

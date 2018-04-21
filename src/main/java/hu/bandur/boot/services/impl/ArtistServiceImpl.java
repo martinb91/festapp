@@ -50,9 +50,11 @@ public class ArtistServiceImpl implements ArtistService {
 	@Override
 	public Artist addArtist(ArtistDTO artistDTO) {
 		Artist artist = modelMapper.map(artistDTO, Artist.class);
-		this.changeStyles(artist);
+		Artist a = artistRepository.save(artist);
+		a.setStyles(artist.getStyles());
+		this.changeStyles(a);
 //		 artist.setStyles(this.setArtistReferencesForStyles(artist, artist.getStyles()));
-		return artistRepository.save(artist);
+		return a;
 	}
 
 	@Override

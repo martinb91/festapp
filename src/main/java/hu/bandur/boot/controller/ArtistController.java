@@ -35,7 +35,7 @@ public class ArtistController {
 		for(Artist artist : artistService.findAllArtists()){
 			artistDTOS.add(modelMapper.map(artist, ArtistDTO.class));
 		}
-/*	------- 	Just I can to understand, how works the mapper		---------------------------
+/*	------- 	Just I try to understand, how works the mapper		---------------------------
 		List<Artist> artist =
 				new ArrayList<>();
 		for (ArtistDTO artistDTO : artistDTOS){
@@ -63,7 +63,7 @@ public class ArtistController {
 	}
 
 	@RequestMapping( method = RequestMethod.GET, path = "/style/{styleName}")
-	public List<ArtistDTO> ArtistsByName(@PathVariable String styleName) {
+	public List<ArtistDTO> ArtistsByStyleName(@PathVariable String styleName) {
 		List<ArtistDTO> artistDTOS =
 				new ArrayList<>();
 		for(Artist artist : artistService.getArtistsByStyleName(styleName)){

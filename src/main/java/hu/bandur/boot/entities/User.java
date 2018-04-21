@@ -22,7 +22,7 @@ public  class User implements UserDetails{
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id ;
 	@Column(unique = true)
-	private String username ;
+	private String username;
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password ;
     private String  role;

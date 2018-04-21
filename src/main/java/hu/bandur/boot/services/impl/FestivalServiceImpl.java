@@ -59,6 +59,16 @@ public class FestivalServiceImpl  implements FestivalService{
 	}
 
 	@Override
+	public List<Festival> getFestivalsByStyleName(String styleName) {
+		List<FestivalStyle> festivalStyles = festivalStyleRepository.findFestivalStyleByStyleLike(styleName);
+		List<Festival> festivals = new ArrayList<>();
+		for(FestivalStyle festivalStyle: festivalStyles){
+			festivals.add(festivalStyle.getFestival());
+		}
+		return festivals;
+	}
+
+	@Override
 	public void changeStyles(Festival festival) {
 		List<FestivalStyle> fs = new ArrayList<>();
 		for (FestivalStyle festivalStyle: festivalStyleRepository.findFestivalStyleByFestival(festival)) {
@@ -93,9 +103,10 @@ public class FestivalServiceImpl  implements FestivalService{
 
 	@Override
 	public Festival addFestival(Festival fest) {
-		changeStyles(fest);
 		positionRepository.save(fest.getPosition());
-		return festivalRepository.save(fest);
+		festivalRepository.save(fest);
+		changeStyles(fest);
+		return fest;
 	}
 
 

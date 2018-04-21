@@ -41,6 +41,15 @@ public class FestivalController {
 	public FestivalDTO festivalById(@PathVariable int id) {
 		return modelMapper.map(festivalService.findById(id), FestivalDTO.class);
 	}
+
+	@RequestMapping( method = RequestMethod.GET, path = "/style/{styleName}")
+	public List<FestivalDTO> ArtistsByStyleName(@PathVariable String styleName) {
+		List<FestivalDTO> festivalDTOS =
+				new ArrayList<>();
+		for(Festival artist : festivalService.getFestivalsByStyleName(styleName)){
+			festivalDTOS.add(modelMapper.map(artist, FestivalDTO.class));
+		}return festivalDTOS;
+	}
 //------------
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public FestivalDTO updateById(@PathVariable int id, @RequestBody FestivalDTO festivalDTO) {
@@ -52,13 +61,8 @@ public class FestivalController {
 
 	@RequestMapping(path = "/new.json", method = RequestMethod.POST)
 	public void create(@RequestBody FestivalDTO f) {
+		System.out.println(f);
 		festivalService.addFestival(modelMapper.map(f, Festival.class));
 	}
-
-	//byName
-	//Positon+xkm(Település név alapján googlemapsAPI vagy másik freemapAPI alapján el lehet valszeg kérni a koordinátákat.
-	// így elég a koordinátákat letárolni)
-	//betweenDates
-	//deleteFest esetén figyelni kell arra is hogy felszabadítsuk a foglalt erőforrásokat, gondolok itt a Stílusok, Koncertek, Hely
 
 }
