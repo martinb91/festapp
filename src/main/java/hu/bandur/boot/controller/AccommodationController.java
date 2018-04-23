@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/accommodation")
 public class AccommodationController {
@@ -29,8 +30,8 @@ public class AccommodationController {
     }
 
     @RequestMapping(path = "/new.json", method = RequestMethod.POST)
-    public void add(@RequestBody AccommodationDTO newA){
-        accommodationService.addAccommodation(newA);
+    public AccommodationDTO create(@RequestBody AccommodationDTO accommodationDTO){
+        return accommodationService.addAccommodation(accommodationDTO);
     }
 
     @RequestMapping(path = "/all", method = RequestMethod.GET)

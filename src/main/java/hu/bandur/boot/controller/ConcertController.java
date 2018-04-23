@@ -1,33 +1,16 @@
 package hu.bandur.boot.controller;
 
-import hu.bandur.boot.dto.ArtistDTO;
 import hu.bandur.boot.dto.ConcertDTO;
-import hu.bandur.boot.dto.FestivalDTO;
-import hu.bandur.boot.entities.Concert;
 import hu.bandur.boot.services.ConcertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/concert")
 public class ConcertController {
-
-	//addModifyDeleteConcerts OK
-	//allConcert OK
-	//concersBetwenTwoDates OK
-	//concertsByArtistName OK
-	//concertsByFestivalName OK
-	//egy olyan felületet képzelek el a felvitelnél, és a módosításhoz, ahol buborékban vannak a fesztiválhoz már felvitt koncertek
-	//új buborékokat lehet kérni a felvitelhez, egy piros X-szel törölni a már meglévőket, de itt még nem történne módosítás
-	// és a mentéskor aktualizálódnának a rekordok
-	// ha módosítás vagy törlés vagy új hozzáadása történt akkor törlök először mindenn rekordot(where festival_id='adott fesztivál' )
-	// és újra lementjük
-	//Itt érdemes lehet nem átnyomni az összes előadót mindennel együtt, elég lehet csak az id, és/vagy a név.
-	// EZ NEM ÍGY TÖRTÉNT, DE VALSZEG KINULLÁZOM
-	// JSON-BA A TÖBBI ÉRTÉKET
 
 	private ConcertService concertService;
 
@@ -36,9 +19,24 @@ public class ConcertController {
 		this.concertService = concertService;
 	}
 
-	@RequestMapping("/add")
-	public void addConcerts(@RequestBody List<ConcertDTO> concertDTOS){
-		concertService.addConcertsForFestival(concertDTOS);
+	@RequestMapping(path="/byArtist/{id}" )
+	public List<ConcertDTO> ConcertsByArtistId(@PathVariable int id) {
+		return concertService.ConcertsByArtistId(id);
+	}
+
+	@RequestMapping(path="/byEvent/{id}" )
+	public List<ConcertDTO> ConcertsByEventId(@PathVariable int id) {
+		return concertService.ConcertsByEventId(id);
+	}
+
+	@RequestMapping("/new.json")
+	public void addConcert(@RequestBody ConcertDTO concertDTO){
+		concertService.addConcert(concertDTO);
+	}
+
+/*	@RequestMapping("/byFest")
+	public List<Concert> ConcertsByFest(@RequestBody FestivalDTO festivalDTO) {
+		return concertService.ConcertsByFestName(festivalDTO);
 	}
 
 	@RequestMapping("/modify")
@@ -54,20 +52,5 @@ public class ConcertController {
 	@RequestMapping("/betweenDates")
 	public List<Concert> ConcertsbetweenDates(@RequestBody Date after, @RequestBody Date before) {
 		return concertService.betweenDates(after, before);
-	}
-
-	@RequestMapping(path="/byArtist/{id}" )
-	public List<Concert> ConcertsByArtistId(@PathVariable int id) {
-		return concertService.ConcertsByArtistId(id);
-	}
-
-	@RequestMapping(path="/byEvent/{id}" )
-	public List<Concert> ConcertsByEventId(@PathVariable int id) {
-		return concertService.ConcertsByEventId(id);
-	}
-
-	@RequestMapping("/byFest")
-	public List<Concert> ConcertsByFest(@RequestBody FestivalDTO festivalDTO) {
-		return concertService.ConcertsByFestName(festivalDTO);
-	}
+	}*/
 }

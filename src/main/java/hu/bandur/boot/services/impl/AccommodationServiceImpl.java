@@ -49,14 +49,10 @@ public class AccommodationServiceImpl implements AccommodationService {
 	}
 
 	@Override
-	public void addAccommodation(AccommodationDTO newA) {
-		System.out.println(newA);
-		PositionDTO positionDTO = newA.getAddress();
-		Position position = new Position(positionDTO.getX(),positionDTO.getY(), positionDTO.getCity(),positionDTO.getDescription());
-		System.out.println(position);
-		positionRepository.save(position);
-		accommodationRepository.save(new Accommodation(newA.getPrice(),newA.getName(),newA.getHeads(), position, newA.getDescription(),newA.getEmail(), newA.getPhoneNumber(), null));
-		//az utolsó sort majd javítani (a null érték csak a konverzió miatt van)
+	public AccommodationDTO addAccommodation(AccommodationDTO newA) {
+		Accommodation accommodation = modelMapper.map(newA, Accommodation.class);
+		positionRepository.save(accommodation.getAddress());
+		return modelMapper.map(accommodationRepository.save(accommodation), AccommodationDTO.class);
 	}
 
 	@Override // Ezt a metódust egy komplex lekérdezéssel is meg lehetett volna valósítani.

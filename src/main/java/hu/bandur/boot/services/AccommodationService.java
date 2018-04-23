@@ -7,7 +7,7 @@ import hu.bandur.boot.entities.Accommodation;
 import java.util.List;
 
 public interface AccommodationService {
-    void addAccommodation(AccommodationDTO newA);
+    AccommodationDTO addAccommodation(AccommodationDTO newA);
     List<AccommodationDTO> FindAllWhatNearTheFest(int id);
 
     void modifyAccommodation(AccommodationDTO accommodationDTO);

@@ -1,8 +1,5 @@
 package hu.bandur.boot.dto;
 
-import javax.persistence.*;
-
-
 public class PositionDTO {
 
 	private int id;

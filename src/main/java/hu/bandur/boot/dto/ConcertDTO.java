@@ -51,4 +51,13 @@ public class ConcertDTO {
 		this.begin = begin;
 	}
 
+	@Override
+	public String toString() {
+		return "ConcertDTO{" +
+				"artist=" + artist +
+				", festival=" + festival +
+				", id=" + id +
+				", begin=" + begin +
+				'}';
+	}
 }

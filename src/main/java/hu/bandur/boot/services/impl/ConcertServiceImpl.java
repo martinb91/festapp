@@ -10,6 +10,7 @@ import hu.bandur.boot.repositories.ArtistRepository;
 import hu.bandur.boot.repositories.ConcertRepository;
 import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.services.ConcertService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,12 @@ public class ConcertServiceImpl implements ConcertService {
     private ConcertRepository concertRepository;
     private ArtistRepository artistRepository;
     private FestivalRepository festivalRepository;
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
 
     @Autowired
     public void setConcertRepository(ConcertRepository concertRepository) {
@@ -40,6 +47,35 @@ public class ConcertServiceImpl implements ConcertService {
         this.festivalRepository = festivalRepository;
     }
 
+    @Override
+    public List<ConcertDTO> ConcertsByArtistId(int id) {
+        List<ConcertDTO> concertDTOS = new ArrayList<>();
+        for(Concert concert : concertRepository.findByArtist_Id(id)){
+            concertDTOS.add(modelMapper.map(concert, ConcertDTO.class));
+        }
+        return concertDTOS;
+    }
+
+    @Override
+    public List<ConcertDTO> ConcertsByEventId(int id) {
+        List<ConcertDTO> concertDTOS = new ArrayList<>();
+        for(Concert concert : concertRepository.findByFestival_Id(id)){
+            concertDTOS.add(modelMapper.map(concert, ConcertDTO.class));
+        }
+        return concertDTOS;
+    }
+
+    @Override
+    public Concert addConcert(ConcertDTO concertDTO) {
+        Concert concert = modelMapper.map(concertDTO, Concert.class);
+        System.out.println(concertDTO);
+        concert.setFestival(festivalRepository.findOne(concert.getFestival().getId()));
+        concert.setArtist(artistRepository.findOne(concert.getArtist().getId()));
+        return concertRepository.save(concert);
+    }
+
+
+    //-.------------------------
     @Override
     // érdemes lehet bevezetni egy egyedi struktúrájúDTO-t, hogy ne toljon be minden felesleges adatot, vagy null-al küldeni.
     public void addConcertsForFestival(List<ConcertDTO> concertDTOs) {
@@ -102,17 +138,6 @@ public class ConcertServiceImpl implements ConcertService {
     @Override
     public List<Concert> ConcertsByFestName(FestivalDTO festivalDTO) {
         return concertRepository.findConcertsByFestival_Name("%" + festivalDTO.getName() +"%");
-    }
-
-    @Override
-    public List<Concert> ConcertsByArtistId(int id) {
-        return concertRepository.findByArtist_Id(id);
-    }
-
-    @Override
-    public List<Concert> ConcertsByEventId(int id) {
-        return concertRepository.findByFestival_Id(id);
-
     }
 
 }
