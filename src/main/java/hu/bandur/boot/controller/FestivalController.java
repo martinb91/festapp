@@ -5,9 +5,13 @@ import hu.bandur.boot.entities.Festival;
 import hu.bandur.boot.services.FestivalService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -50,7 +54,7 @@ public class FestivalController {
 			festivalDTOS.add(modelMapper.map(artist, FestivalDTO.class));
 		}return festivalDTOS;
 	}
-//------------
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public FestivalDTO updateById(@PathVariable int id, @RequestBody FestivalDTO festivalDTO) {
 		return modelMapper.map(
@@ -65,4 +69,26 @@ public class FestivalController {
 		festivalService.addFestival(modelMapper.map(f, Festival.class));
 	}
 
+	@RequestMapping(value = "/query", method = RequestMethod.GET)
+	public List<FestivalDTO> festsByQuerry(@RequestParam(value = "styleName", required = false) String style,
+										   @RequestParam(value = "isFree", required = false) boolean isFree,
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "begin", required = false) LocalDate beginDate,
+										   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam(value = "end", required = false) LocalDate endDate,
+										   @RequestParam(value = "posX", required = false) Double posX,
+										   @RequestParam(value = "posY", required = false) Double posY,
+										   @RequestParam(value = "maxFromPos", required = false) Double maxFromPos){
+
+		Date begin = null;
+		Date end = null;
+		if (beginDate != null){
+			begin = Date.from(beginDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		}
+		if (endDate != null){
+			end = Date.from(endDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		}
+		System.out.println(style + isFree +end +begin + posX + posY + maxFromPos);
+
+		return festivalService.festsByQuery( style, isFree, begin, end, posX, posY, maxFromPos);
+
+	}
 }
