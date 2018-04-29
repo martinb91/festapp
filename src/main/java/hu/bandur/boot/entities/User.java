@@ -16,7 +16,7 @@ import java.util.Collection;
 @Table(name="USERS")
 @Scope("session")
 public  class User implements UserDetails{
-	public static enum Role{ USER }
+	public static enum Role{ ADMIN, USER }
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -26,6 +26,7 @@ public  class User implements UserDetails{
 	@JsonProperty(access = Access.WRITE_ONLY)
 	private String password ;
     private String  role;
+    @Column(name = "FULLNAME")
     private String fullName;
 	private String email;
 

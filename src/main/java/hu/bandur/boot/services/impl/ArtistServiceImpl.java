@@ -3,6 +3,7 @@ package hu.bandur.boot.services.impl;
 import hu.bandur.boot.dto.ArtistDTO;
 import hu.bandur.boot.entities.Artist;
 import hu.bandur.boot.entities.MusicStyle;
+import hu.bandur.boot.pictureHandler.storage.StoreFileService;
 import hu.bandur.boot.repositories.ArtistRepository;
 import hu.bandur.boot.repositories.MusicStyleRepository;
 import hu.bandur.boot.services.ArtistService;
@@ -10,15 +11,21 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 @Component("artistService")
 @Transactional
-public class ArtistServiceImpl implements ArtistService {
+public class ArtistServiceImpl implements ArtistService, StoreFileService {
 
 	private ArtistRepository artistRepository;
 	private MusicStyleRepository musicStyleRepository;
@@ -59,8 +66,7 @@ public class ArtistServiceImpl implements ArtistService {
 
 	@Override
 	public Artist updateArtist(ArtistDTO artistDTO) {
-/*		Artist artist = modelMapper.map(artistDTO, Artist.class);
-		musicStyleRepository.deleteMusicStyleByArtist(artist);*/
+    	artistDTO.setPicture(artistRepository.findOne(artistDTO.getId()).getPicture());
 		return addArtist(artistDTO);
 	}
 
@@ -119,10 +125,17 @@ public class ArtistServiceImpl implements ArtistService {
 		return artists;
 	}
 
-/*	private List<MusicStyle> setArtistReferencesForStyles(Artist artist, List<MusicStyle> musicStyles){ Ha a fellépőt lementem nem mentődnek vele a stílusai, így ezt külön kell menteni.
-    	for (MusicStyle ms : musicStyles) {
-    		ms.setArtist(artist);
-    	}
-    	return musicStyles;
-	}*/
+	@Override
+	public void storeFile(MultipartFile file, int id) {
+		String currentDate = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+		try {
+			String newName =  currentDate + file.getOriginalFilename();
+			Files.copy(file.getInputStream(), this.rootLocation.resolve(newName));
+			Artist artist = artistRepository.findOne(id);
+			artist.setPicture(newName);
+			artistRepository.save(artist);
+		} catch (Exception e) {
+			throw new RuntimeException("FAIL!");
+		}
+	}
 }

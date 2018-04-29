@@ -3,6 +3,7 @@ package hu.bandur.boot.services;
 import hu.bandur.boot.dto.ArtistDTO;
 import hu.bandur.boot.dto.MusicStyleDTO;
 import hu.bandur.boot.entities.Artist;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,7 +19,6 @@ public interface ArtistService {
 
     //---- these we don't use until now
     List<Artist> findByName(String s);
-
     boolean deleteArtistById(int id);
 
 

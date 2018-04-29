@@ -7,13 +7,13 @@ public class ConcertDTO {
 	private ArtistDTO artist;
 	private FestivalDTO festival;
 	private int id;
-	private Date begin;
+	private Date beginDate;
 
 	public ConcertDTO(ArtistDTO artist, FestivalDTO festival, Date begin, int id) {
 
 		this.artist = artist;
 		this.festival = festival;
-		this.begin = begin;
+		this.beginDate = begin;
 		this.id= id;
 	}
 	private ConcertDTO() {
@@ -43,12 +43,12 @@ public class ConcertDTO {
 		this.id = id;
 	}
 
-	public Date getBegin() {
-		return begin;
+	public Date getBeginDate() {
+		return beginDate;
 	}
 
-	public void setBegin(Date begin) {
-		this.begin = begin;
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class ConcertDTO {
 				"artist=" + artist +
 				", festival=" + festival +
 				", id=" + id +
-				", begin=" + begin +
+				", beginDate=" + beginDate +
 				'}';
 	}
 }

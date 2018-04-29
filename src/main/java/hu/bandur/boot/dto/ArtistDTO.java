@@ -9,6 +9,15 @@ public class ArtistDTO implements Serializable {
 	private String description;
 	private int id;
 	private List<MusicStyleDTO> styles;
+	private String picture;
+
+	public ArtistDTO(String name, String description, int id, List<MusicStyleDTO> styles, String picture) {
+		this.name = name;
+		this.description = description;
+		this.id = id;
+		this.styles = styles;
+		this.picture = picture;
+	}
 
 	public ArtistDTO(String name, String description, int id, List<MusicStyleDTO> styles) {
 		this.name = name;
@@ -49,6 +58,14 @@ public class ArtistDTO implements Serializable {
 
 	public void setStyles(List<MusicStyleDTO> styles) {
 		this.styles = styles;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	@Override

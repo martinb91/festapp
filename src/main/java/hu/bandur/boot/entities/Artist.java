@@ -15,6 +15,7 @@ public class Artist {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
+	private String picture;
 	@JsonIgnore
 	@OneToMany(mappedBy = "artist")
 	private List<MusicStyle> styles;
@@ -31,6 +32,20 @@ public class Artist {
 		this.name = name;
 		this.description = description;
 		this.styles = styles;
+	}
+
+	public Artist(String name, String description, String picture) {
+		this.name = name;
+		this.description = description;
+		this.picture = picture;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	public String getName() {

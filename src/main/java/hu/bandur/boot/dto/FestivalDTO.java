@@ -5,6 +5,7 @@ import java.util.List;
 
 public class FestivalDTO {
 	private PositionDTO position;
+	private String picture;
 	private Date beginDate;
 	private Date endDate;
 	private String description;
@@ -14,14 +15,23 @@ public class FestivalDTO {
 
 	public FestivalDTO() { }
 
-	public FestivalDTO(PositionDTO position, Date beginDate, Date endDate, String description, String name, int id, List<FestivalStyleDTO> styles) {
+	public FestivalDTO(PositionDTO position, String picture, Date beginDate, Date endDate, String description, String name, int id, List<FestivalStyleDTO> styles) {
 		this.position = position;
+		this.picture = picture;
 		this.beginDate = beginDate;
 		this.endDate = endDate;
 		this.description = description;
 		this.name = name;
 		this.id = id;
 		this.styles = styles;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	public PositionDTO getPosition() {

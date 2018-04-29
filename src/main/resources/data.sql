@@ -2,11 +2,11 @@ INSERT INTO ARTISTS(NAME, DESCRIPTION) VALUES ('Fellepo1', 'Fellepo1 leiras');
 
 INSERT INTO ARTISTS(NAME, DESCRIPTION) VALUES ('Fellepo2', 'Fellepo2 leiras');
 
-INSERT INTO ARTISTS(NAME, DESCRIPTION) VALUES ('Fellepo3', 'Fellepo3 leiras');
+INSERT INTO ARTISTS(NAME, DESCRIPTION, picture) VALUES ('Fellepo3', 'Fellepo3 leiras', 'macskak.jpg');
 
-INSERT INTO ARTISTS(NAME, DESCRIPTION) VALUES ('Fellepo4', 'Fellepo4 leiras');
+INSERT INTO ARTISTS(NAME, DESCRIPTION, picture) VALUES ('Fellepo4', 'Fellepo4 leiras', 'ticket.png');
 
-INSERT INTO ARTISTS(NAME, DESCRIPTION) VALUES ('Fellepo5', 'Fellepo5 leiras');
+INSERT INTO ARTISTS(NAME, DESCRIPTION, picture) VALUES ('Fellepo5', 'Fellepo5 leiras', 'user.png');
 
 INSERT INTO ARTISTS(NAME, DESCRIPTION) VALUES ('Fellepo6', 'Fellepo6 leiras');
 
@@ -64,7 +64,9 @@ INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('KutyaBarát', (SELECT id
 
 INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('DogFriendly', (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'));
 
-INSERT INTO USERS (USERNAME, PASSWORD, Role) VALUES ('admin@aa.hu', '123Asd7as', 'USER');
+INSERT INTO USERS (USERNAME, PASSWORD, Role, FULLNAME, EMAIL) VALUES ('admin@aa.hu', '123Asd7as', 'ADMIN', 'Admin József', 'admin@aa.hu');
+
+INSERT INTO USERS (USERNAME, PASSWORD, Role, FULLNAME, EMAIL) VALUES ('admin', '123Asd7as', 'ADMIN', 'Admin Géza', 'admin@bb.hu');
 
 INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
 

@@ -22,36 +22,6 @@ public class UploadController {
 	@Autowired
 	StorageService storageService;
 
-	List<String> files = new ArrayList<String>();
-
-	@CrossOrigin
-	@PostMapping("/post")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
-		String message = "";
-		try {
-
-			storageService.store(file);
-			files.add(file.getOriginalFilename());
-
-			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.OK).body(message);
-		} catch (Exception e) {
-			message = "FAIL to upload " + file.getOriginalFilename() + "!";
-			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
-		}
-	}
-
-	@CrossOrigin
-	@GetMapping("/getallfiles")
-	public ResponseEntity<List<String>> getListFiles(Model model) {
-		List<String> fileNames = files
-				.stream().map(fileName -> MvcUriComponentsBuilder
-						.fromMethodName(UploadController.class, "getFile", fileName).build().toString())
-				.collect(Collectors.toList());
-
-		return ResponseEntity.ok().body(fileNames);
-	}
-
 	@GetMapping("/files/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
@@ -59,5 +29,14 @@ public class UploadController {
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
 				.body(file);
+	}
+
+	@CrossOrigin
+	@GetMapping("/file/{name}.json")
+	public ResponseEntity<List<String>> getFile(Model model, @PathVariable String name) {
+		List<String> fileNames = new ArrayList<>();
+		fileNames.add(MvcUriComponentsBuilder
+						.fromMethodName(UploadController.class, "getFile", name).build().toString());
+		return ResponseEntity.ok().body(fileNames);
 	}
 }

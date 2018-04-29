@@ -85,7 +85,7 @@ public class ConcertServiceImpl implements ConcertService {
         Festival festival = festivalRepository.findOne(festivalDTO.getId());
         for (ConcertDTO concertDTO : concertDTOs) {
             Artist artist = artistRepository.findOne(concertDTO.getArtist().getId());
-            Date date = concertDTO.getBegin();
+            Date date = concertDTO.getBeginDate();
             concertRepository.save(new Concert(artist, festival, date));
         }
     }

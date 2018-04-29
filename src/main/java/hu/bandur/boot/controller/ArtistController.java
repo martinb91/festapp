@@ -2,22 +2,32 @@ package hu.bandur.boot.controller;
 
 import hu.bandur.boot.dto.ArtistDTO;
 import hu.bandur.boot.entities.Artist;
-import hu.bandur.boot.mapper.ArtistMapperImpl;
+import hu.bandur.boot.pictureHandler.storage.StoreFileService;
 import hu.bandur.boot.services.ArtistService;
+import hu.bandur.boot.services.impl.ArtistServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/artists")
 public class ArtistController {
 
 	private ArtistService artistService;
 	private ModelMapper modelMapper;
+	private StoreFileService storeFileService;
+
+	@Autowired
+	public void setStoreFileService(ArtistServiceImpl storeFileService) {
+		this.storeFileService = storeFileService;
+	}
 
 	@Autowired
 	public void setModelMapper(ModelMapper modelMapper) {
@@ -35,15 +45,6 @@ public class ArtistController {
 		for(Artist artist : artistService.findAllArtists()){
 			artistDTOS.add(modelMapper.map(artist, ArtistDTO.class));
 		}
-/*	------- 	Just I try to understand, how works the mapper		---------------------------
-		List<Artist> artist =
-				new ArrayList<>();
-		for (ArtistDTO artistDTO : artistDTOS){
-			artist.add(modelMapper.map(artistDTO, Artist.class));
-		}
-		for (Artist a : artist){
-			System.out.println(a);
-		}	*/
 		return artistDTOS;
 	}
 
@@ -76,6 +77,20 @@ public class ArtistController {
 	public boolean delete(@PathVariable int id) {
 		System.out.println(id);
 		return artistService.deleteArtistById(id);
+	}
+
+	@RequestMapping( method = RequestMethod.POST, path = "/upload/{id}")
+	public ResponseEntity<String> uploadPicture(@RequestParam("file") MultipartFile file, @PathVariable int id) {
+		String message = "";
+		try {
+			storeFileService.storeFile(file, id);
+			//files.add(file.getOriginalFilename());
+			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.OK).body(message);
+		} catch (Exception e) {
+			message = "FAIL to upload " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
 	}
 
 }

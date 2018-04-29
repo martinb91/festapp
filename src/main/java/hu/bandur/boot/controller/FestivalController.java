@@ -2,11 +2,17 @@ package hu.bandur.boot.controller;
 
 import hu.bandur.boot.dto.FestivalDTO;
 import hu.bandur.boot.entities.Festival;
+import hu.bandur.boot.pictureHandler.storage.StoreFileService;
 import hu.bandur.boot.services.FestivalService;
+import hu.bandur.boot.services.impl.ArtistServiceImpl;
+import hu.bandur.boot.services.impl.FestivalServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -14,13 +20,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 @RestController
 @RequestMapping("/festival")
 public class FestivalController {
 
 	private FestivalService festivalService;
 	private ModelMapper modelMapper;
+	private StoreFileService storeFileService;
+
+	@Autowired
+	public void setStoreFileService(FestivalServiceImpl storeFileService) {
+		this.storeFileService = storeFileService;
+	}
 
 	@Autowired
 	public void setModelMapper(ModelMapper modelMapper) {
@@ -77,7 +89,6 @@ public class FestivalController {
 										   @RequestParam(value = "posX", required = false) Double posX,
 										   @RequestParam(value = "posY", required = false) Double posY,
 										   @RequestParam(value = "maxFromPos", required = false) Double maxFromPos){
-
 		Date begin = null;
 		Date end = null;
 		if (beginDate != null){
@@ -86,9 +97,19 @@ public class FestivalController {
 		if (endDate != null){
 			end = Date.from(endDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		}
-		System.out.println(style + isFree +end +begin + posX + posY + maxFromPos);
-
 		return festivalService.festsByQuery( style, isFree, begin, end, posX, posY, maxFromPos);
+	}
 
+	@RequestMapping( method = RequestMethod.POST, path = "/upload/{id}")
+	public ResponseEntity<String> uploadPicture(@RequestParam("file") MultipartFile file, @PathVariable int id) {
+		String message = "";
+		try {
+			storeFileService.storeFile(file, id);
+			message = "Sikeres feltöltés " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.OK).body(message);
+		} catch (Exception e) {
+			message = "HIBA a feltöltésben " + file.getOriginalFilename() + "!";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+		}
 	}
 }

@@ -1,14 +1,9 @@
 package hu.bandur.boot.services.impl;
 
-import com.fasterxml.classmate.types.ResolvedPrimitiveType;
 import hu.bandur.boot.dto.FestivalDTO;
-import hu.bandur.boot.dto.FestivalStyleDTO;
-import hu.bandur.boot.dto.PositionDTO;
-import hu.bandur.boot.entities.Festival;
-import hu.bandur.boot.entities.FestivalStyle;
-import hu.bandur.boot.entities.MusicStyle;
-import hu.bandur.boot.entities.Position;
+import hu.bandur.boot.entities.*;
 import hu.bandur.boot.math.Haversine;
+import hu.bandur.boot.pictureHandler.storage.StoreFileService;
 import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.repositories.FestivalStyleRepository;
 import hu.bandur.boot.repositories.PositionRepository;
@@ -17,7 +12,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +23,7 @@ import java.util.List;
 
 @Component("festivalService")
 @Transactional
-public class FestivalServiceImpl implements FestivalService {
+public class FestivalServiceImpl implements FestivalService, StoreFileService {
     private FestivalRepository festivalRepository;
     private PositionRepository positionRepository;
     private FestivalStyleRepository festivalStyleRepository;
@@ -52,7 +50,8 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     public List<Festival> findAllFestival() {
-        List<Festival> festivals = this.festivalRepository.findAll();
+//        List<Festival> festivals = this.festivalRepository.findAll();
+        List<Festival> festivals = festivalRepository.findByEndDateAfter(new Date(new Date().getTime() -1));
         return festivals;
     }
 
@@ -115,6 +114,7 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     public Festival updateFestival(Festival festival) {
+        festival.setPicture(festivalRepository.findOne(festival.getId()).getPicture());
         return addFestival(festival);
     }
 
@@ -142,7 +142,7 @@ public class FestivalServiceImpl implements FestivalService {
             }
         }
 
-        List<FestivalDTO> festivalDTOS = new ArrayList<FestivalDTO>();
+        List<FestivalDTO> festivalDTOS = new ArrayList<>();
         for (Festival festival : festivals) {
             System.out.println(festival.getName());
             festivalDTOS.add(modelMapper.map(festival, FestivalDTO.class));
@@ -182,9 +182,11 @@ public class FestivalServiceImpl implements FestivalService {
         List<Festival> festivals;
         if (begin == null) {
             if (end == null) {
-                festivals = workWithPositions(festivalRepository.findAll(), posX, posY, maxFromPos);
+//                festivals = workWithPositions(festivalRepository.findAll(), posX, posY, maxFromPos);
+                festivals = festivalRepository.findByEndDateAfter(new Date(new Date().getTime() -1));
             } else {
-                festivals = festivalRepository.findByBeginDateBefore(new Date(end.getTime() + 1));
+//                festivals = festivalRepository.findByBeginDateBefore(new Date(end.getTime() + 1)); // lecseréltem, hogy az elmúlottakat már ne mutassa.
+                festivals = festivalRepository.findByEndDateAfterAndBeginDateBefore(new Date(new Date().getTime() -1), new Date(end.getTime() + 1));
             }
         } else {
             if (end == null) {
@@ -197,28 +199,42 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     private List<Festival> datesWithStyle(String style, Date begin, Date end, Double posX, Double posY, Double maxFromPos) {
-        List<Festival> festivals = new ArrayList<>();
-
+        List<Festival> festivals;
         if (begin == null) {
             if (end == null) {
-                List<FestivalStyle> festivalStyles = festivalStyleRepository.findByStyleContainingIgnoreCase(style);
+                /*List<FestivalStyle> festivalStyles = festivalStyleRepository.findByStyleContainingIgnoreCase(style);
                 for (FestivalStyle festivalStyle : festivalStyles) {
                     festivals.add(festivalStyle.getFestival());
-                }
-                festivals = workWithPositions(festivals, posX, posY, maxFromPos);
+                }*/
+                festivals = festivalRepository.findByEndDateAfterAndStyle(style, new Date());
             } else {
-                festivals = festivalRepository.findByBeginDateBeforeAndStyle(style, end);
-                festivals = workWithPositions(festivals, posX, posY, maxFromPos);
+//                festivals = festivalRepository.findByBeginDateBeforeAndStyle(style, end);
+                festivals = festivalRepository.findByBeginDateBeforeAndEndDateAfterAndStyle(style, new Date(), end);
             }
         } else {
             if (end == null) {
                 festivals = festivalRepository.findByEndDateAfterAndStyle(style, begin);
-                festivals = workWithPositions(festivals, posX, posY, maxFromPos);
             } else {
                 festivals = festivalRepository.findByBeginDateBeforeAndEndDateAfterAndStyle(style, begin, end);
-                festivals = workWithPositions(festivals, posX, posY, maxFromPos);
+
             }
         }
+        festivals = workWithPositions(festivals, posX, posY, maxFromPos);
         return festivals;
+    }
+
+    @Override
+    public void storeFile(MultipartFile file, int id) {
+        String currentDate = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
+        try {
+            System.out.println("itt");
+            String newName =  currentDate + file.getOriginalFilename();
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(newName));
+            Festival festival = festivalRepository.findOne(id);
+            festival.setPicture(newName);
+            festivalRepository.save(festival);
+        } catch (Exception e) {
+            throw new RuntimeException("FAIL!");
+        }
     }
 }

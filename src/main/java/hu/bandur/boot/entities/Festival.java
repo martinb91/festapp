@@ -19,6 +19,7 @@ public class Festival {
 	private Date endDate;
 	private String description;
 	private String name;
+	private String picture;
 	@OneToOne
 	private Position position;
 	@OneToMany(mappedBy="festival")
@@ -29,12 +30,21 @@ public class Festival {
 
 	private Festival() { }
 
-	public Festival(Position place, Date beginDate, Date endDate, String description, String name) {
-		this.position = place;
+	public Festival(Date beginDate, Date endDate, String description, String name, String picture, Position position) {
 		this.beginDate = beginDate;
 		this.endDate = endDate;
 		this.description = description;
 		this.name = name;
+		this.picture = picture;
+		this.position = position;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
 	}
 
 	public int getId() {
