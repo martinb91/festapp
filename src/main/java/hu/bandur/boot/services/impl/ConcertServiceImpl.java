@@ -51,7 +51,9 @@ public class ConcertServiceImpl implements ConcertService {
     public List<ConcertDTO> ConcertsByArtistId(int id) {
         List<ConcertDTO> concertDTOS = new ArrayList<>();
         for(Concert concert : concertRepository.findByArtist_Id(id)){
-            concertDTOS.add(modelMapper.map(concert, ConcertDTO.class));
+            if (concert.getFestival().getEndDate().getTime() > new Date().getTime()) {
+                concertDTOS.add(modelMapper.map(concert, ConcertDTO.class));
+            }
         }
         return concertDTOS;
     }
@@ -60,7 +62,9 @@ public class ConcertServiceImpl implements ConcertService {
     public List<ConcertDTO> ConcertsByEventId(int id) {
         List<ConcertDTO> concertDTOS = new ArrayList<>();
         for(Concert concert : concertRepository.findByFestival_Id(id)){
-            concertDTOS.add(modelMapper.map(concert, ConcertDTO.class));
+            if (concert.getFestival().getEndDate().getTime() > new Date().getTime()) {
+                concertDTOS.add(modelMapper.map(concert, ConcertDTO.class));
+            }
         }
         return concertDTOS;
     }

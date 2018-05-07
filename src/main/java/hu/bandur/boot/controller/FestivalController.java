@@ -60,11 +60,7 @@ public class FestivalController {
 
 	@RequestMapping( method = RequestMethod.GET, path = "/style/{styleName}")
 	public List<FestivalDTO> ArtistsByStyleName(@PathVariable String styleName) {
-		List<FestivalDTO> festivalDTOS =
-				new ArrayList<>();
-		for(Festival artist : festivalService.getFestivalsByStyleName(styleName)){
-			festivalDTOS.add(modelMapper.map(artist, FestivalDTO.class));
-		}return festivalDTOS;
+		return festivalService.getFestivalsByStyleName(styleName);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)

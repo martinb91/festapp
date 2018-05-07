@@ -13,17 +13,17 @@ import java.util.List;
 public interface FestivalRepository extends CrudRepository<Festival, Integer>{
 
  List<Festival> findAll();
- List<Festival> findByBeginDateBefore(Date end);
- List<Festival> findByEndDateAfter(Date begin);
- List<Festival> findByEndDateAfterAndBeginDateBefore(Date begin, Date end);
+ List<Festival> findByEndDateAfterOrderByBeginDate(Date begin);
+ List<Festival> findByEndDateAfterAndBeginDateBeforeOrderByBeginDate(Date begin, Date end);
 
- @Query("select f from Festival f inner join f.styles stl where lower(stl.style) like lower(:myStyle) and f.beginDate <= :end")
+ @Query("select f from Festival f inner join f.styles stl where lower(stl.style) like lower(:myStyle) and f.endDate >= :begin order by f.beginDate")
+ List<Festival> findByEndDateAfterAndStyleOrderByBeginDate(@Param("myStyle")String style, @Param("begin")Date begin);
+
+ @Query("select f from Festival f inner join f.styles stl where lower(stl.style) like lower(:myStyle) and f.endDate >= :begin and f.beginDate <= :end order by f.beginDate")
+ List<Festival> findByBeginDateBeforeAndEndDateAfterAndStyleOrderByBeginDate(@Param("myStyle")String style, @Param("begin")Date begin, @Param("end")Date end);
+
+ @Query("select f from Festival f inner join f.styles stl where lower(stl.style) like lower(:myStyle) and f.beginDate <= :end order by f.beginDate")
  List<Festival> findByBeginDateBeforeAndStyle(@Param("myStyle")String style, @Param("end")Date end);
 
- @Query("select f from Festival f inner join f.styles stl where lower(stl.style) like lower(:myStyle) and f.endDate >= :begin")
- List<Festival> findByEndDateAfterAndStyle(@Param("myStyle")String style, @Param("begin")Date begin);
-
- @Query("select f from Festival f inner join f.styles stl where lower(stl.style) like lower(:myStyle) and f.endDate >= :begin and f.beginDate <= :end")
- List<Festival> findByBeginDateBeforeAndEndDateAfterAndStyle(@Param("myStyle")String style, @Param("begin")Date begin, @Param("end")Date end);
-
+ List<Festival> findByBeginDateBefore(Date end);
  }

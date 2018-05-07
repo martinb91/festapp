@@ -19,7 +19,7 @@ public interface ArtistService {
 
     //---- these we don't use until now
     List<Artist> findByName(String s);
-    boolean deleteArtistById(int id);
+    int deleteArtistById(int id);
 
 
 }

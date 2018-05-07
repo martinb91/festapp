@@ -6,6 +6,7 @@ import hu.bandur.boot.dto.PositionDTO;
 import hu.bandur.boot.entities.Accommodation;
 import hu.bandur.boot.entities.Festival;
 import hu.bandur.boot.entities.Position;
+import hu.bandur.boot.math.Haversine;
 import hu.bandur.boot.repositories.AccommodationRepository;
 import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.repositories.PositionRepository;
@@ -55,7 +56,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 		return modelMapper.map(accommodationRepository.save(accommodation), AccommodationDTO.class);
 	}
 
-	@Override // Ezt a metódust egy komplex lekérdezéssel is meg lehetett volna valósítani.
+	@Override
 	public List<AccommodationDTO> FindAllWhatNearTheFest(int id){
 		Festival festival = festivalRepository.findOne(id);
 		double fx =	festival.getPosition().getX();
@@ -65,7 +66,7 @@ public class AccommodationServiceImpl implements AccommodationService {
 		for (Accommodation accommodation : accommodations){
 			double x = accommodation.getAddress().getX();
 			double y = accommodation.getAddress().getY();
-			if(Math.abs(fx-x) < 0.4 && Math.abs(fy-y) < 0.4){
+			if(Haversine.distance(x, y, fx, fy) < 10){
 				accommodationDTOS.add(modelMapper.map(accommodation, AccommodationDTO.class));
 			}
 		}

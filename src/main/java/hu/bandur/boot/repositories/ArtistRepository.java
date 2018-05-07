@@ -11,7 +11,7 @@ public interface ArtistRepository extends CrudRepository<Artist, Integer>{
 
     List<Artist> findAll();
     List<Artist> findByNameLike(String name);
-    boolean deleteById(int id);
+    int deleteById(int id);
 
 /*    @Query("select a from Artist where a.styles.style = ?1 ")
     List<Artist> findAllByStyles(String style);*/

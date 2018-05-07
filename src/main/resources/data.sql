@@ -84,6 +84,8 @@ INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM
 
 INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.840,16.844, 'Zalaegerszeg', 'Hotel1');
 
+INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.851,16.834, 'Zalaegerszeg', 'Hotel11');
+
 INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.783,16.833, 'Bocfölde', 'Hotel3');
 
 INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.934,16.855, 'Egervár', 'Hotel2');
@@ -95,7 +97,10 @@ INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 48.221,20.306, 'Ózd', '
 INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 48.209,20.301, 'Ózd', 'Hotel6');
 
 INSERT INTO ACCOMMONDATION(ADDRESS_ID, NAME, PRICE, HEADS, DESCRIPTION, EMAIL, PHONENUMBER, WEBSITE) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Zalaegerszeg' and DESCRIPTION='Hotel1'),
- 'Aranybárány Hotel', 1111, 111, 'Zeg legelitebb szállodája', 'arany@barany.hu', '4122334455', 'http://aranybarany.hu/hu/');
+ 'Aranybárány Hotel', 1111, 111, 'Zalaegerszeg legelitebb szállodája', 'arany@barany.hu', '4122334455', 'http://aranybarany.hu/hu/');
+
+ INSERT INTO ACCOMMONDATION(ADDRESS_ID, NAME, PRICE, HEADS, DESCRIPTION, EMAIL, PHONENUMBER, WEBSITE) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Zalaegerszeg' and DESCRIPTION='Hotel11'),
+ 'Aranybirka Hotel', 1211, 311, 'Zalaegerszeg legelitebb szállodája', 'arany@birka.hu', '2222334455', 'http://aranybirka.hu/hu/');
 
 INSERT INTO ACCOMMONDATION(ADDRESS_ID, NAME, PRICE, HEADS, DESCRIPTION, EMAIL, PHONENUMBER, WEBSITE) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Encs' and DESCRIPTION='FestPos'),
  'Ezüstbirka Hotel', 1121, 115, 'Encs legelitebb szállodája', 'ezust@barany.hu', '1122314455', 'http://ezustbirka.hu/');

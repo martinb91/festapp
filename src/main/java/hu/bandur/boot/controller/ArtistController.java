@@ -72,10 +72,8 @@ public class ArtistController {
 		}return artistDTOS;
 	}
 
-	//------ valamiért nem veszi át, valszeg authentikációval van gond, volt már hasonló probléma a PUT-tal, de nem emlékszem már rá, hogy oldodott meg
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public boolean delete(@PathVariable int id) {
-		System.out.println(id);
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	public int delete(@RequestParam("id") Integer id) {
 		return artistService.deleteArtistById(id);
 	}
 

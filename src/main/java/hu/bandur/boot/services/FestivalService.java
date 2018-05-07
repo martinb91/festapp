@@ -13,7 +13,7 @@ public interface FestivalService {
 	void changeStyles(Festival festival);
 	void addStyles(Festival festival);
 	Festival findById(int id);
-	List<Festival> getFestivalsByStyleName(String styleName);
+	List<FestivalDTO> getFestivalsByStyleName(String styleName);
 
 	Festival addFestival(Festival fest);
 	Festival updateFestival(Festival festival);

@@ -1,5 +1,6 @@
 package hu.bandur.boot.controller;
 
+import hu.bandur.boot.dto.FestivalDTO;
 import hu.bandur.boot.dto.FestivalStyleDTO;
 import hu.bandur.boot.entities.Festival;
 import hu.bandur.boot.services.FestivalStyleService;
@@ -24,10 +25,10 @@ public class FestivalStyleController {
 
 	
 	@RequestMapping(path = "/bystyle", method = RequestMethod.POST)
-	public List<Festival> allFestivalByStyle(@RequestBody FestivalStyleDTO s) {
-        return festivalStyleService.findAllFestivalByStyleName(s.getStyle());
+	public List<FestivalDTO> allFestivalByStyle(@RequestBody String s) {
+        return festivalStyleService.findAllFestivalByStyleName(s);
 	}
 
 	//allStyle
-	
+
 }

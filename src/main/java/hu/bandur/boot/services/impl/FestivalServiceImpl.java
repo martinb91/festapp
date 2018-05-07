@@ -51,7 +51,7 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
 
     public List<Festival> findAllFestival() {
 //        List<Festival> festivals = this.festivalRepository.findAll();
-        List<Festival> festivals = festivalRepository.findByEndDateAfter(new Date(new Date().getTime() -1));
+        List<Festival> festivals = festivalRepository.findByEndDateAfterOrderByBeginDate(new Date(new Date().getTime() -1));
         return festivals;
     }
 
@@ -61,11 +61,12 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
     }
 
     @Override
-    public List<Festival> getFestivalsByStyleName(String styleName) {
+    public List<FestivalDTO> getFestivalsByStyleName(String styleName) {
         List<FestivalStyle> festivalStyles = festivalStyleRepository.findByStyleContainingIgnoreCase(styleName);
-        List<Festival> festivals = new ArrayList<>();
-        for (FestivalStyle festivalStyle : festivalStyles) {
-            festivals.add(festivalStyle.getFestival());
+        List<FestivalDTO> festivals = new ArrayList<>();
+        for (FestivalStyle fs : festivalStyles){
+            if( fs.getFestival().getEndDate().getTime() > new Date().getTime() && !festivals.contains(fs.getFestival()))
+                festivals.add(modelMapper.map(fs.getFestival(), FestivalDTO.class));
         }
         return festivals;
     }
@@ -120,6 +121,7 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
 
     @Override
     public List<FestivalDTO> festsByQuery(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos) {
+        style = "%" + style + "%";
         List<Festival> festivals = new ArrayList<>();
         if (style == null) {
             if (!isFree) {
@@ -132,7 +134,6 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
                 festivals = datesWithStyle(style, begin, end, posX, posY, maxFromPos);
             } else {
                 for (Festival festival : datesWithStyle(style, begin, end, posX, posY, maxFromPos)){
-                    System.out.println(festival.getName());
                     for (FestivalStyle festivalStyle : festival.getStyles()){
                         if(festivalStyle.getStyle().toLowerCase().equals("free")){
                             festivals.add(festival);
@@ -152,7 +153,6 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
 
 
     private boolean isShorterWithHaversine(Festival festival, Double posX, Double posY, Double maxFromPos) {
-        System.out.println(Haversine.distance(festival.getPosition().getX(), festival.getPosition().getY(), posX, posY));
         return Haversine.distance(festival.getPosition().getX(), festival.getPosition().getY(), posX, posY) < maxFromPos;
     }
 
@@ -183,16 +183,16 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
         if (begin == null) {
             if (end == null) {
 //                festivals = workWithPositions(festivalRepository.findAll(), posX, posY, maxFromPos);
-                festivals = festivalRepository.findByEndDateAfter(new Date(new Date().getTime() -1));
+                festivals = festivalRepository.findByEndDateAfterOrderByBeginDate(new Date());
             } else {
 //                festivals = festivalRepository.findByBeginDateBefore(new Date(end.getTime() + 1)); // lecseréltem, hogy az elmúlottakat már ne mutassa.
-                festivals = festivalRepository.findByEndDateAfterAndBeginDateBefore(new Date(new Date().getTime() -1), new Date(end.getTime() + 1));
+                festivals = festivalRepository.findByEndDateAfterAndBeginDateBeforeOrderByBeginDate(new Date(), new Date(end.getTime() + 1));
             }
         } else {
             if (end == null) {
-                festivals = festivalRepository.findByEndDateAfter(new Date(begin.getTime() - 1));
+                festivals = festivalRepository.findByEndDateAfterOrderByBeginDate(new Date(begin.getTime() - 1));
             } else {
-                festivals = festivalRepository.findByEndDateAfterAndBeginDateBefore(new Date(begin.getTime() - 1), new Date(end.getTime() + 1));
+                festivals = festivalRepository.findByEndDateAfterAndBeginDateBeforeOrderByBeginDate(new Date(begin.getTime() - 1), new Date(end.getTime() + 1));
             }
         }
         return workWithPositions(festivals, posX, posY, maxFromPos);
@@ -206,16 +206,16 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
                 for (FestivalStyle festivalStyle : festivalStyles) {
                     festivals.add(festivalStyle.getFestival());
                 }*/
-                festivals = festivalRepository.findByEndDateAfterAndStyle(style, new Date());
+                festivals = festivalRepository.findByEndDateAfterAndStyleOrderByBeginDate(style, new Date());
             } else {
 //                festivals = festivalRepository.findByBeginDateBeforeAndStyle(style, end);
-                festivals = festivalRepository.findByBeginDateBeforeAndEndDateAfterAndStyle(style, new Date(), end);
+                festivals = festivalRepository.findByBeginDateBeforeAndEndDateAfterAndStyleOrderByBeginDate(style, new Date(), end);
             }
         } else {
             if (end == null) {
-                festivals = festivalRepository.findByEndDateAfterAndStyle(style, begin);
+                festivals = festivalRepository.findByEndDateAfterAndStyleOrderByBeginDate(style, begin);
             } else {
-                festivals = festivalRepository.findByBeginDateBeforeAndEndDateAfterAndStyle(style, begin, end);
+                festivals = festivalRepository.findByBeginDateBeforeAndEndDateAfterAndStyleOrderByBeginDate(style, begin, end);
 
             }
         }
@@ -227,7 +227,6 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
     public void storeFile(MultipartFile file, int id) {
         String currentDate = new SimpleDateFormat("yyyyMMddHHmm").format(new Date());
         try {
-            System.out.println("itt");
             String newName =  currentDate + file.getOriginalFilename();
             Files.copy(file.getInputStream(), this.rootLocation.resolve(newName));
             Festival festival = festivalRepository.findOne(id);

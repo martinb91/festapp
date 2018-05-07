@@ -5,6 +5,7 @@ import hu.bandur.boot.entities.Artist;
 import hu.bandur.boot.entities.MusicStyle;
 import hu.bandur.boot.pictureHandler.storage.StoreFileService;
 import hu.bandur.boot.repositories.ArtistRepository;
+import hu.bandur.boot.repositories.ConcertRepository;
 import hu.bandur.boot.repositories.MusicStyleRepository;
 import hu.bandur.boot.services.ArtistService;
 import org.modelmapper.ModelMapper;
@@ -30,6 +31,7 @@ public class ArtistServiceImpl implements ArtistService, StoreFileService {
 	private ArtistRepository artistRepository;
 	private MusicStyleRepository musicStyleRepository;
     private ModelMapper modelMapper;
+    private ConcertRepository concertRepository;
 
     @Autowired
     public void setArtistRepository(ArtistRepository artistRepository) {
@@ -43,6 +45,11 @@ public class ArtistServiceImpl implements ArtistService, StoreFileService {
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
+
+	@Autowired
+	public void setConcertRepository(ConcertRepository concertRepository) {
+		this.concertRepository = concertRepository;
+	}
 
     @Override
     public List<Artist> findAllArtists() {
@@ -110,7 +117,8 @@ public class ArtistServiceImpl implements ArtistService, StoreFileService {
     }
 
 	@Override
-	public boolean deleteArtistById(int id) {
+	public int deleteArtistById(int id) {
+    	concertRepository.deleteByArtist_Id(id);
 		musicStyleRepository.deleteMusicStyleByArtist(artistRepository.findOne(id));
 		return artistRepository.deleteById(id);
 	}
