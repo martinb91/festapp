@@ -14,8 +14,6 @@ public interface ConcertService {
     List<ConcertDTO> ConcertsByEventId(int id);
     Concert addConcert(ConcertDTO concertDTO);
 
-    void addConcertsForFestival(List<ConcertDTO> concertDTOs);
-    void deleteConcertsForFestival(FestivalDTO festivalDTO);
     List<Concert> findAllConcerts();
     List<Concert> betweenDates(Date after, Date before);
     List<Concert> ConcertsByArtistName(ArtistDTO artistDTO);

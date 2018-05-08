@@ -19,4 +19,6 @@ public interface FestivalService {
 	Festival updateFestival(Festival festival);
 
     List<FestivalDTO> festsByQuery(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos);
+
+    int deleteById(int id);
 }

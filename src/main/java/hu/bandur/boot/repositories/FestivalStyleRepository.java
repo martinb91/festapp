@@ -18,6 +18,8 @@ public interface FestivalStyleRepository extends CrudRepository<FestivalStyle, I
     @Query("select fs from FestivalStyle fs where lower(fs.style) like lower(:myStyle)")
     List<FestivalStyle> findByStyleContainingIgnoreCase(@Param("myStyle") String myStyle);
 
+    int deleteByFestival_Id(int id);
+
 
 
 

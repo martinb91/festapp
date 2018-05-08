@@ -93,6 +93,7 @@ public class FestivalController {
 		if (endDate != null){
 			end = Date.from(endDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		}
+		System.out.println(style + isFree + begin + end + posY + maxFromPos);
 		return festivalService.festsByQuery( style, isFree, begin, end, posX, posY, maxFromPos);
 	}
 
@@ -107,5 +108,10 @@ public class FestivalController {
 			message = "HIBA a feltöltésben " + file.getOriginalFilename() + "!";
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
 		}
+	}
+
+	@RequestMapping( method = RequestMethod.DELETE, path = "/delete/{id}")
+	public int deleteFestById(@PathVariable int id) {
+		return festivalService.deleteById(id);
 	}
 }

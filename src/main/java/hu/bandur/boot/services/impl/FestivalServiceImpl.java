@@ -4,6 +4,7 @@ import hu.bandur.boot.dto.FestivalDTO;
 import hu.bandur.boot.entities.*;
 import hu.bandur.boot.math.Haversine;
 import hu.bandur.boot.pictureHandler.storage.StoreFileService;
+import hu.bandur.boot.repositories.ConcertRepository;
 import hu.bandur.boot.repositories.FestivalRepository;
 import hu.bandur.boot.repositories.FestivalStyleRepository;
 import hu.bandur.boot.repositories.PositionRepository;
@@ -28,6 +29,7 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
     private PositionRepository positionRepository;
     private FestivalStyleRepository festivalStyleRepository;
     private ModelMapper modelMapper;
+    private ConcertRepository concertRepository;
 
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
@@ -37,6 +39,11 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
     @Autowired
     public void setFestivalRepository(FestivalRepository festivalRepository) {
         this.festivalRepository = festivalRepository;
+    }
+
+    @Autowired
+    public void setConcertRepository(ConcertRepository concertRepository) {
+        this.concertRepository = concertRepository;
     }
 
     @Autowired
@@ -107,8 +114,10 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
     @Override
     public Festival addFestival(Festival fest) {
         positionRepository.save(fest.getPosition());
-        festivalRepository.save(fest);
-        changeStyles(fest);
+        Festival festival = festivalRepository.save(fest);
+        System.out.println(festival);
+        festival.setStyles(fest.getStyles());
+        changeStyles(festival);
         return fest;
     }
 
@@ -121,7 +130,9 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
 
     @Override
     public List<FestivalDTO> festsByQuery(String style, boolean isFree, Date begin, Date end, Double posX, Double posY, Double maxFromPos) {
-        style = "%" + style + "%";
+       if (style != null) {
+           style = "%" + style + "%";
+       }
         List<Festival> festivals = new ArrayList<>();
         if (style == null) {
             if (!isFree) {
@@ -151,6 +162,12 @@ public class FestivalServiceImpl implements FestivalService, StoreFileService {
         return festivalDTOS;
     }
 
+    @Override
+    public int deleteById(int id) {
+        concertRepository.deleteByFestival_Id(id);
+        festivalStyleRepository.deleteByFestival_Id(id);
+        return festivalRepository.deleteById(id);
+    }
 
     private boolean isShorterWithHaversine(Festival festival, Double posX, Double posY, Double maxFromPos) {
         return Haversine.distance(festival.getPosition().getX(), festival.getPosition().getY(), posX, posY) < maxFromPos;

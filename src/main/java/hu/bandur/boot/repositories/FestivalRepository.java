@@ -26,4 +26,6 @@ public interface FestivalRepository extends CrudRepository<Festival, Integer>{
  List<Festival> findByBeginDateBeforeAndStyle(@Param("myStyle")String style, @Param("end")Date end);
 
  List<Festival> findByBeginDateBefore(Date end);
+
+ int deleteById(int id);
  }

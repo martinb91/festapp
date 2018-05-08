@@ -80,25 +80,6 @@ public class ConcertServiceImpl implements ConcertService {
 
 
     //-.------------------------
-    @Override
-    // érdemes lehet bevezetni egy egyedi struktúrájúDTO-t, hogy ne toljon be minden felesleges adatot, vagy null-al küldeni.
-    public void addConcertsForFestival(List<ConcertDTO> concertDTOs) {
-        //mivel a koncerteket egyszerre csak egy fesztiválhoz feszem fel, ezért elég az első elem festDTO id-ját kiolvasni.
-        FestivalDTO festivalDTO = concertDTOs.get(0).getFestival();
-        deleteConcertsForFestival(festivalDTO);
-        Festival festival = festivalRepository.findOne(festivalDTO.getId());
-        for (ConcertDTO concertDTO : concertDTOs) {
-            Artist artist = artistRepository.findOne(concertDTO.getArtist().getId());
-            Date date = concertDTO.getBeginDate();
-            concertRepository.save(new Concert(artist, festival, date));
-        }
-    }
-
-    @Override
-    public void deleteConcertsForFestival(FestivalDTO festivalDTO) {
-
-        concertRepository.deleteByFestival_Id(festivalDTO.getId());
-    }
 
     @Override
     public List<Concert> findAllConcerts() {

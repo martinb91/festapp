@@ -38,11 +38,25 @@ INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 48.333, 21.133, 'Encs', 
 
 INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.830,16.843, 'Zalaegerszeg', 'FestPos');
 
-INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Ózd' and DESCRIPTION='FesztivalPos'), '2017-10-23', '2017-11-14', 'ÓzdFest', 'Ózd legjobb fesztiválja');
+INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.830,16.843, 'Kecskemét', 'FestPos');
+
+INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.830,16.843, 'Paks', 'FestPos');
+
+INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.830,16.843, 'Ukk', 'FestPos');
+
+INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.830,16.843, 'Győr', 'FestPos');
+
+INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Ózd' and DESCRIPTION='FesztivalPos'), '2018-10-23', '2018-11-14', 'ÓzdFest', 'Ózd legjobb fesztiválja');
 
 INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Encs' and DESCRIPTION='FestPos'), '2018-10-11', '2018-10-19', 'EncsFest', 'Encs legjobb fesztiválja');
 
-INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Zalaegerszeg' and DESCRIPTION='FestPos'), '2018-12-11', '2018-12-14', 'EgerszegFest', 'Zalaegerszeg legjobb fesztiválja');
+INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Kecskemét' and DESCRIPTION='FestPos'), '2019-04-11', '2019-04-14', 'KecsFest', 'Kecskemét legjobb fesztiválja');
+
+INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Paks' and DESCRIPTION='FestPos'), '2018-02-11', '2018-02-14', 'PaksFest', 'Paks legjobb fesztiválja');
+
+INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Ukk' and DESCRIPTION='FestPos'), '2019-05-11', '2019-05-14', 'UkkFest', 'Ukk legjobb fesztiválja');
+
+INSERT INTO FESTIVALS(POSITION_ID, BEGINDATE, ENDDATE, NAME, DESCRIPTION) VALUES ((SELECT id FROM POSITIONS WHERE CITY='Győr' and DESCRIPTION='FestPos'), '2018-12-11', '2018-12-14', 'GyőrFest', 'Győr legjobb fesztiválja');
 
 INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('Street-food', (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'));
 
@@ -64,23 +78,65 @@ INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('KutyaBarát', (SELECT id
 
 INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('DogFriendly', (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'));
 
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('FoodTruck', (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'));
+
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('FoodTruck', (SELECT id FROM FESTIVALS WHERE name='KecsFest'));
+
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('FoodTruck', (SELECT id FROM FESTIVALS WHERE name='PaksFest'));
+
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('FoodTruck', (SELECT id FROM FESTIVALS WHERE name='UkkFest'));
+
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('FoodTruck', (SELECT id FROM FESTIVALS WHERE name='GyőrFest'));
+
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('Free', (SELECT id FROM FESTIVALS WHERE name='UkkFest'));
+
+INSERT INTO FESTIVALSTYLES(STYLE, FESTIVAL_ID) VALUES ('VízParti', (SELECT id FROM FESTIVALS WHERE name='GyőrFest'));
+
 INSERT INTO USERS (USERNAME, PASSWORD, Role, FULLNAME, EMAIL) VALUES ('admin@aa.hu', '123Asd7as', 'ADMIN', 'Admin József', 'admin@aa.hu');
 
 INSERT INTO USERS (USERNAME, PASSWORD, Role, FULLNAME, EMAIL) VALUES ('admin', '123Asd7as', 'ADMIN', 'Admin Géza', 'admin@bb.hu');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2018-11-14');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo2'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-15');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo2'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2018-11-15');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='EncsFest'), '2017-11-12');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='EncsFest'), '2018-11-12');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo1'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo1'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2018-11-14');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo4'), (SELECT id FROM FESTIVALS WHERE name='EncsFest'), '2017-11-14');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo4'), (SELECT id FROM FESTIVALS WHERE name='EncsFest'), '2018-11-14');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo7'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo7'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2018-11-14');
 
-INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo8'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2017-11-14');
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo8'), (SELECT id FROM FESTIVALS WHERE name='ÓzdFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='GyőrFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo2'), (SELECT id FROM FESTIVALS WHERE name='GyőrFest'), '2018-11-15');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='UkkFest'), '2018-11-12');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo1'), (SELECT id FROM FESTIVALS WHERE name='GyőrFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo4'), (SELECT id FROM FESTIVALS WHERE name='GyőrFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo7'), (SELECT id FROM FESTIVALS WHERE name='GyőrFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo8'), (SELECT id FROM FESTIVALS WHERE name='GyőrFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='KecsFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo2'), (SELECT id FROM FESTIVALS WHERE name='UkkFest'), '2018-11-15');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo3'), (SELECT id FROM FESTIVALS WHERE name='PaksFest'), '2018-11-12');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo1'), (SELECT id FROM FESTIVALS WHERE name='UkkFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo4'), (SELECT id FROM FESTIVALS WHERE name='KecsFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo7'), (SELECT id FROM FESTIVALS WHERE name='KecsFest'), '2018-11-14');
+
+INSERT INTO CONCERTS (artist_id, festival_id, beginDate) values ((SELECT id FROM ARTISTS WHERE name='Fellepo8'), (SELECT id FROM FESTIVALS WHERE name='UkkFest'), '2018-11-14');
 
 INSERT INTO POSITIONS(X, Y, CITY, DESCRIPTION) VALUES ( 46.840,16.844, 'Zalaegerszeg', 'Hotel1');
 

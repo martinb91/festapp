@@ -1,14 +1,10 @@
 package hu.bandur.boot;
 
-import hu.bandur.boot.controller.ArtistController;
 import hu.bandur.boot.dto.ArtistDTO;
 import hu.bandur.boot.dto.MusicStyleDTO;
 import hu.bandur.boot.entities.Artist;
 import hu.bandur.boot.repositories.MusicStyleRepository;
 import hu.bandur.boot.services.ArtistService;
-import hu.bandur.boot.services.MusicStyleService;
-import hu.bandur.boot.services.impl.ArtistServiceImpl;
-import org.hibernate.Hibernate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
