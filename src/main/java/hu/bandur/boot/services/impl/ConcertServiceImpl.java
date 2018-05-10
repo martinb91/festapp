@@ -72,7 +72,6 @@ public class ConcertServiceImpl implements ConcertService {
     @Override
     public Concert addConcert(ConcertDTO concertDTO) {
         Concert concert = modelMapper.map(concertDTO, Concert.class);
-        System.out.println(concertDTO);
         concert.setFestival(festivalRepository.findOne(concert.getFestival().getId()));
         concert.setArtist(artistRepository.findOne(concert.getArtist().getId()));
         return concertRepository.save(concert);

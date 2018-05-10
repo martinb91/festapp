@@ -60,7 +60,6 @@ public class FestivalStyle {
 		return "FestivalStyle{" +
 				"style='" + style + '\'' +
 				", id=" + id +
-				", festival=" + festival +
 				'}';
 	}
 }

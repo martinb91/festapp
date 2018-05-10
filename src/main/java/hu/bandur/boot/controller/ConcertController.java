@@ -29,7 +29,7 @@ public class ConcertController {
 		return concertService.ConcertsByEventId(id);
 	}
 
-	@RequestMapping("/new.json")
+	@RequestMapping(path="/new.json", method = RequestMethod.POST)
 	public void addConcert(@RequestBody ConcertDTO concertDTO){
 		concertService.addConcert(concertDTO);
 	}
